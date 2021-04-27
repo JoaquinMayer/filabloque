@@ -9,13 +9,6 @@ package filabloque;
  *
  * @author joaquin
  */
-public class FilaBloque {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // Solamente iniciar el sistema
-    }
+public class System {
     
 }
