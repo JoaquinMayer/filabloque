@@ -9,6 +9,6 @@ package filabloque;
  *
  * @author joaquin
  */
-public class System {
+public class Main {
     
 }
