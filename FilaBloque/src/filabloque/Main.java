@@ -17,6 +17,7 @@ public class Main {
 
     private ArrayList<Player> players;
     private Game game;
+    private boolean exit = false;
 
     public Main() {
         this.players = new ArrayList<>();
@@ -37,6 +38,14 @@ public class Main {
 
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
+    }
+
+    public boolean isExit() {
+        return exit;
+    }
+
+    public void setExit(boolean exit) {
+        this.exit = exit;
     }
 
     private void showPlayers(int order, Player filterPlayer) {
@@ -88,7 +97,11 @@ public class Main {
         System.out.println("__________________________");
         System.out.println();
 
-        this.menu();
+        while (!this.isExit()) {
+            this.menu();
+        }
+        
+        this.exit();
     }
 
     private void menu() {
@@ -126,10 +139,11 @@ public class Main {
             case 3 ->
                 this.showRanking();
             case 4 ->
-                this.exit();
+                this.setExit(true);
             default ->
                 System.out.println("Opcion no valida!");
         }
+
     }
 
     private void newPlayer() {
@@ -162,7 +176,6 @@ public class Main {
             this.addPlayer(newPlayer);
             System.out.println("El usuario " + newPlayer.getName() + " se ha creado correctamente.");
             System.out.println();
-            this.menu();
         } catch (Exception ex) {
             System.out.println("Algun campo no es valido." + ex);
         }
@@ -210,7 +223,6 @@ public class Main {
 
         Game game = new Game(players.get(0), players.get(1));
         game.startGame();
-        this.menu();
     }
 
     private void showRanking() {
@@ -247,7 +259,6 @@ public class Main {
             this.showPlayers(option, null);
         }
 
-        this.menu();
     }
 
     private void exit() {
