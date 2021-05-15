@@ -15,9 +15,9 @@ public class Board {
     private String designBoard;
     private String config;
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_BLUE = "\u001B[34m";
+    private String ANSI_RESET = "\u001B[0m";
+    private String ANSI_RED = "\u001B[31m";
+    private String ANSI_BLUE = "\u001B[34m";
 
     public Board(String designBoard, String config) {
         this.designBoard = designBoard;
