@@ -17,6 +17,5 @@ public class FilaBloque {
     public static void main(String[] args) {
         Main system = new Main();
         system.startSystem();
-    }
-    
+    }   
 }
