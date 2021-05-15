@@ -12,6 +12,7 @@ import java.util.Scanner;
  * @author joaquin
  */
 public class Game {
+
     private Player player1;
     private Player player2;
     private Board board;
@@ -24,7 +25,7 @@ public class Game {
         this.player2 = player2;
         this.board = null;
         this.playerTurn = 1;
-        this.completedDesigns = null;
+        this.completedDesigns = new boolean[][] {{false,false}, {false,false}};
         this.finishedGame = false;
     }
 
@@ -75,29 +76,28 @@ public class Game {
     public void setFinishedGame(boolean finishedGame) {
         this.finishedGame = finishedGame;
     }
-    
+
     public void startGame() {
         System.out.println("Juego iniciado");
         System.out.println("__________________________");
         System.out.println();
-        
+
         int configuration[] = this.gameConfiguration();
         this.setBoard(new Board(configuration[0], configuration[1]));
 
         this.board.showBoard();
-        
+
         while (!this.isFinishedGame()) {
             this.playTurn();
             this.checkTurn();
         }
     }
-    
-    private int[] gameConfiguration () {
+
+    private int[] gameConfiguration() {
         Scanner scan = new Scanner(System.in);
         int configuration[] = new int[]{1, 1};
         int boardConfigOption = 0;
         int sizeOption = 0;
-        
 
         while (boardConfigOption == 0) {
             try {
@@ -112,21 +112,20 @@ public class Game {
                 System.out.println();
                 System.out.print("Ingrese una opcion: ");
                 boardConfigOption = scan.nextInt();
-                
+
                 if (boardConfigOption > 0 && boardConfigOption <= 3) {
-                   configuration[0] = boardConfigOption;                    
+                    configuration[0] = boardConfigOption;
                 } else {
                     System.out.println("Por favor ingrese una opcion valida.");
                     boardConfigOption = 0;
                 }
-            }
-            catch(Exception ex) {
-               System.out.println("Por favor ingrese una opcion valida.");
-               boardConfigOption = 0;
-               scan.nextLine();
+            } catch (Exception ex) {
+                System.out.println("Por favor ingrese una opcion valida.");
+                boardConfigOption = 0;
+                scan.nextLine();
             }
         }
-            
+
         while (sizeOption == 0) {
             try {
                 System.out.println("Tamano del tablero");
@@ -140,157 +139,158 @@ public class Game {
                 System.out.println();
                 System.out.print("Ingrese una opcion: ");
                 sizeOption = scan.nextInt();
-                
+
                 if (sizeOption > 0 && sizeOption <= 3) {
-                   configuration[1] = sizeOption;                    
+                    configuration[1] = sizeOption;
                 } else {
                     System.out.println("Por favor ingrese una opcion valida.");
                     sizeOption = 0;
                 }
-            }
-            catch(Exception ex) {
-               System.out.println("Por favor ingrese una opcion valida.");
-               sizeOption = 0;
-               scan.nextLine();
+            } catch (Exception ex) {
+                System.out.println("Por favor ingrese una opcion valida.");
+                sizeOption = 0;
+                scan.nextLine();
             }
         }
-        
+
         return configuration;
     }
-    
-    public void playTurn(){
+
+    public void playTurn() {
         String actualPlayerName;
-        
+
         if (this.playerTurn == 1) {
             actualPlayerName = this.player1.getName();
         } else {
             actualPlayerName = this.player2.getName();
         }
-        
+
         System.out.print("Es el turno de " + actualPlayerName);
         System.out.println();
-        
+
         for (int i = 1; i <= 2; i++) {
             boolean madeMove = false;
             while (!madeMove) {
                 String play = this.readPlay(i);
                 madeMove = board.makeMove(play, i, this.getPlayerTurn());
-                
+
                 if (!madeMove) {
                     System.out.println("Jugada invalida, por favor ingrese una jugada valida.");
                 }
             }
-            
+
             this.board.showBoard();
         }
-        
+
         if (this.playerTurn == 1) {
             this.setPlayerTurn(2);
         } else {
             this.setPlayerTurn(1);
         }
     }
-    
-    public String readPlay(int turn){
+
+    public String readPlay(int turn) {
         Scanner scan = new Scanner(System.in);
         boolean validPlay = false;
         String play = "";
-        
+
         while (!validPlay) {
             try {
                 System.out.print("Inrese la siguiente jugada (turno " + turn + "): ");
                 play = scan.nextLine();
-                
+
                 if (this.isValidFormatPlay(play)) {
                     validPlay = true;
                 } else {
                     System.out.println("Por favor ingrese una jugada valida.");
                 }
-            }
-            catch(Exception ex) {
-               System.out.println("Por favor ingrese una jugada valida.");
+            } catch (Exception ex) {
+                System.out.println("Por favor ingrese una jugada valida.");
             }
         }
         return play;
     }
-    
+
     private boolean isValidFormatPlay(String play) {
-          return true;
+        return true;
     }
-    
+
     public void checkTurn() {
         this.checkCompletedDesigns();
         this.setFinishedGame(this.checkWinner());
     }
-    
-    private void checkCompletedDesigns() {
-        boolean updatedCompletedDesigns[][] = this.getCompletedDesigns();
-        
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (this.board.getBoard()[i][j] == 1 || this.board.getBoard()[i][j] == 3) {
-                    int pieceToCheck = this.board.getBoard()[i][j];
-                    boolean horizontalDesign = true;
-                    for (int k = 0; k < 4 && horizontalDesign; k++) {
-                        if (this.board.getBoard()[i][k] != pieceToCheck) {
-                            horizontalDesign = false;
-                        }
-                    }
 
-                    boolean verticalDesign = true;
-                    for (int k = 0; k < 4 && verticalDesign; k++) {
-                        if (this.board.getBoard()[k][j] != pieceToCheck) {
-                            verticalDesign = false;
+    private void checkCompletedDesigns() {
+        try {
+            boolean updatedCompletedDesigns[][] = this.getCompletedDesigns();
+
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    if (this.board.getBoard()[i][j] == 1 || this.board.getBoard()[i][j] == 3) {
+                        int pieceToCheck = this.board.getBoard()[i][j];
+                        boolean horizontalDesign = true;
+                        for (int k = 0; k < 4 && horizontalDesign; k++) {
+                            if (this.board.getBoard()[i][k] != pieceToCheck) {
+                                horizontalDesign = false;
+                            }
                         }
-                    }
+
+                        boolean verticalDesign = true;
+                        for (int k = 0; k < 4 && verticalDesign; k++) {
+                            if (this.board.getBoard()[k][j] != pieceToCheck) {
+                                verticalDesign = false;
+                            }
+                        }
 
                         if (horizontalDesign || verticalDesign) {
                             if (pieceToCheck == 1) {
-                               updatedCompletedDesigns[0][0] = true;
+                                updatedCompletedDesigns[0][0] = true;
                                 System.out.println(this.getPlayer1().getName() + " completo la fila");
                             } else {
                                 updatedCompletedDesigns[1][0] = true;
                                 System.out.println(this.getPlayer2().getName() + " completo la fila");
                             }
                         }
-                                
-                        this.setCompletedDesigns(updatedCompletedDesigns);
-                } else if (this.board.getBoard()[i][j] == 2 || this.board.getBoard()[i][j] == 4) {
-                    int pieceToCheck = this.board.getBoard()[i][j];
-                    boolean blockDesign = false;
-                    if (i + 1 < 4 && this.board.getBoard()[i + 1][j] == pieceToCheck && j + 1 < 4 && this.board.getBoard()[i + 1][j + 1] == pieceToCheck && this.board.getBoard()[i][j + 1] == pieceToCheck) {
-                        blockDesign = true;
-                    }
 
-                    if (blockDesign) {
-                        
-                        if (pieceToCheck == 2) {
-                            updatedCompletedDesigns[0][1] = true;
-                            System.out.println(this.getPlayer1().getName() + " completo el bloque");
-                        } else {
-                            updatedCompletedDesigns[1][1] = true;
-                            System.out.println(this.getPlayer2().getName() + " completo el bloque");
+                        this.setCompletedDesigns(updatedCompletedDesigns);
+                    } else if (this.board.getBoard()[i][j] == 2 || this.board.getBoard()[i][j] == 4) {
+                        int pieceToCheck = this.board.getBoard()[i][j];
+                        boolean blockDesign = false;
+                        if (i + 1 < 4 && this.board.getBoard()[i + 1][j] == pieceToCheck && j + 1 < 4 && this.board.getBoard()[i + 1][j + 1] == pieceToCheck && this.board.getBoard()[i][j + 1] == pieceToCheck) {
+                            blockDesign = true;
                         }
-                                
-                        this.setCompletedDesigns(updatedCompletedDesigns);
-                    }
-                }
 
+                        if (blockDesign) {
+
+                            if (pieceToCheck == 2) {
+                                updatedCompletedDesigns[0][1] = true;
+                                System.out.println(this.getPlayer1().getName() + " completo el bloque");
+                            } else {
+                                updatedCompletedDesigns[1][1] = true;
+                                System.out.println(this.getPlayer2().getName() + " completo el bloque");
+                            }
+
+                            this.setCompletedDesigns(updatedCompletedDesigns);
+                        }
+                    }
+
+                }
             }
+        } catch (Exception e) {
+            System.out.println("Error en chequeo");
         }
+
     }
-    
+
     private boolean checkWinner() {
         boolean gameFinished = true;
-        
-        if (
-                this.getCompletedDesigns()[0][0] && 
-                this.getCompletedDesigns()[0][1] && 
-                this.getCompletedDesigns()[1][0] && 
-                this.getCompletedDesigns()[1][1] ) {
+
+        if (this.getCompletedDesigns()[0][0]
+                && this.getCompletedDesigns()[0][1]
+                && this.getCompletedDesigns()[1][0]
+                && this.getCompletedDesigns()[1][1]) {
             System.out.println("Empate");
-        }
-        else if (this.getCompletedDesigns()[0][0] && this.getCompletedDesigns()[1][0]) {
+        } else if (this.getCompletedDesigns()[0][0] && this.getCompletedDesigns()[1][0]) {
             this.player1.setGamesWon(this.getPlayer1().getGamesWon() + 1);
             System.out.println("Gano " + this.getPlayer1().getName());
         } else if (this.getCompletedDesigns()[0][1] && this.getCompletedDesigns()[1][1]) {
@@ -299,7 +299,7 @@ public class Game {
         } else {
             gameFinished = false;
         }
-        
+
         return gameFinished;
     }
 }

@@ -163,7 +163,7 @@ public class Main {
             System.out.println();
             this.menu();
         } catch (Exception ex) {
-            System.out.println("Algun campo no es valido.");
+            System.out.println("Algun campo no es valido." + ex);
         }
     }
 
@@ -197,9 +197,6 @@ public class Main {
                 }
             }
         }
-
-        Player p2 = players.get(1);
-        p2.setGamesWon(2);
 
         Game game = new Game(players.get(0), players.get(1));
         game.startGame();
