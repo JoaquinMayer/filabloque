@@ -64,7 +64,7 @@ public class Board {
                 && (rowTo == rowFrom || rowTo == rowFrom - 1 || rowTo == rowFrom + 1) && (columnTo == columnFrom || columnTo == columnFrom - 1 || columnTo == columnFrom + 1);
     }
 
-    private boolean isPlayerPiece(int x, int y, int player) {
+    public boolean isPlayerPiece(int x, int y, int player) {
         if (player == 1) {
             return this.getBoard()[x][y] == 1 || this.getBoard()[x][y] == 2;
         } else {

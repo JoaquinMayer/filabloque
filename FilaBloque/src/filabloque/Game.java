@@ -6,7 +6,6 @@
 package filabloque;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -321,18 +320,16 @@ public class Game {
 
     private boolean checkWinner() {
         boolean gameFinished = true;
+        boolean[][] completedDesigns = this.getCompletedDesigns();       
 
-        if (this.getCompletedDesigns()[0][0]
-                && this.getCompletedDesigns()[0][1]
-                && this.getCompletedDesigns()[1][0]
-                && this.getCompletedDesigns()[1][1]) {
-            System.out.println("Empate");
-        } else if (this.getCompletedDesigns()[0][0] && this.getCompletedDesigns()[1][0]) {
+        if (completedDesigns[0][0] && completedDesigns[0][1] && completedDesigns[1][0] && completedDesigns[1][1]) {
+            System.out.println("Es un empate");
+        } else if (completedDesigns[0][0] && completedDesigns[1][0]) {
             this.player1.setGamesWon(this.getPlayer1().getGamesWon() + 1);
-            System.out.println("Gano " + this.getPlayer1().getName());
-        } else if (this.getCompletedDesigns()[0][1] && this.getCompletedDesigns()[1][1]) {
+            System.out.println("Ha ganado el jugador " + this.getPlayer1().getName());
+        } else if (completedDesigns[0][1] && completedDesigns[1][1]) {
             this.player2.setGamesWon(this.getPlayer2().getGamesWon() + 1);
-            System.out.println("Gano " + this.getPlayer2().getName());
+            System.out.println("Ha ganado el jugador " + this.getPlayer2().getName());
         } else {
             gameFinished = false;
         }
