@@ -87,14 +87,17 @@ public class Game {
         System.out.println();
 
         int configuration[] = this.gameConfiguration();
-        this.setBoard(new Board(configuration[0], configuration[1]));
+        if (configuration[0] != 3 || configuration[1] != 3) {
+            this.setBoard(new Board(configuration[0], configuration[1]));
 
-        this.board.showBoard();
+            this.board.showBoard();
 
-        while (!this.isFinishedGame()) {
-            this.playTurn();
-            this.checkTurn();
+            while (!this.isFinishedGame()) {
+                this.playTurn();
+                this.checkTurn();
+            }
         }
+
     }
 
     private int[] gameConfiguration() {
@@ -130,6 +133,11 @@ public class Game {
             }
         }
 
+        if (boardConfigOption == 3) {
+            sizeOption = 3;
+            configuration[1] = 3;
+        }
+
         while (sizeOption == 0) {
             try {
                 System.out.println("Tamano del tablero");
@@ -157,6 +165,10 @@ public class Game {
             }
         }
 
+        if (sizeOption == 3) {
+            configuration[0] = 3;
+        }
+        
         return configuration;
     }
 
