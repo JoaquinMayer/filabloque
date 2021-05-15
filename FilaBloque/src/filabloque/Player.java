@@ -13,11 +13,13 @@ public class Player {
     private String name;
     private String alias;
     private int age;
+    private int gamesWon;
 
     public Player(String name, String alias, int age) {
         this.name = name;
         this.alias = alias;
         this.age = age;
+        this.gamesWon = 0;
     }
 
     public String getName() {
@@ -42,5 +44,13 @@ public class Player {
 
     public void setAge(int age) {
         this.age = age;
-    }    
+    }
+
+    public int getGamesWon() {
+        return gamesWon;
+    }
+
+    public void setGamesWon(int gamesWon) {
+        this.gamesWon = gamesWon;
+    }
 }

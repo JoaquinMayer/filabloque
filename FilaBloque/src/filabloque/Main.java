@@ -6,6 +6,7 @@
 package filabloque;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -37,12 +38,23 @@ public class Main {
         this.players = players;
     }
     
-    private void showPlayers(ArrayList<Player> players) {
+    private void showPlayers(String order) {
         int i = 1;
-        for (Player player : players) {
-            System.out.println(i + ". " + player.getName());
+        
+        if (order.equals("games")) {
+            Collections.sort(this.players, (Player p1, Player p2) -> {
+                return Integer.valueOf(p2.getGamesWon()).compareTo(p1.getGamesWon());
+            });
+        } else {
+            Collections.sort(this.players, (Player p1, Player p2) -> {
+                return p1.getName().compareToIgnoreCase(p2.getName());
+            });            
+        }
+        
+        for (Player player : this.players) {
+            System.out.println(i + ". " + player.getName() + " " + player.getGamesWon());
             i++;
-        }   
+        }
     }
     
     private void addPlayer(Player player) {
@@ -69,7 +81,7 @@ public class Main {
         System.out.println("Bienvenido a Fila y Bloque");
         System.out.println("__________________________");
         System.out.println();
-        
+      
         this.menu();
     }
     
@@ -90,13 +102,14 @@ public class Main {
                 System.out.println();
                 System.out.print("Ingrese una opcion: ");
                 option = scan.nextInt();
-                System.out.println();
+                scan.nextLine();
             }
-                 catch(Exception ex)
-            {
+            catch(Exception ex) {
                System.out.println("Por favor ingrese una opcion valida");
             }
         }
+        
+        System.out.println();
         
         switch(option) {
         case 1:
@@ -106,7 +119,7 @@ public class Main {
           this.newGame();
           break;
         case 3:
-          this.showRanking("ASC");
+          this.showRanking("games");
           break;
         case 4:
           this.exit();
@@ -149,34 +162,35 @@ public class Main {
             System.out.println();
             this.menu();
         }
-        catch(Exception ex)
-        {
+        catch(Exception ex) {
            System.out.println("Algun campo no es valido.");
         }
     }
     
     private void newGame() {
         Scanner scan = new Scanner(System.in);
-        int player = 0;
         ArrayList<Player> players = new ArrayList<>();
 
         System.out.println("Nuevo juego");
         System.out.println("__________________________");
         
+        
         for (int i = 1; i <= 2; i++) {
+            int player = 0;
             while (player == 0) {
-                this.showPlayers(this.players);
+                this.showPlayers("alphabetical");
                 
                 try {
                     System.out.println();
-                    System.out.print("Seleccione el jugador " + i + ":");                    
+                    System.out.print("Seleccione el jugador " + i + ": ");                    
                     player = scan.nextInt();
                     System.out.println();
 
-                    if (player > 0) {
+                    if (player > 0 && !(player - 1 > this.players.size())) {
                         players.add(this.players.get(player - 1));
                     } else {
                         System.out.println("Por favor ingrese una opcion valida.");
+                        player = 0;
                     }
                 }
                 catch(Exception ex)
@@ -187,16 +201,20 @@ public class Main {
             }
         }
         
+        Player p2 = players.get(1);
+        p2.setGamesWon(2);
+        
         Game game = new Game(players.get(0), players.get(1));
         game.startGame();
         this.menu();
     }
     
     private void showRanking(String order) {
-        System.out.println("show ranking");
+        this.showPlayers(order);
+        this.menu();
     }
     
     private void exit() {
-        System.out.println("exit");
+        System.out.println("Exit");
     }
 }
