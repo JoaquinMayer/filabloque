@@ -74,6 +74,10 @@ public class Game {
         this.completedDesigns = completedDesigns;
     }
     
+    public void startGame() {
+        System.out.println("Juego iniciado");
+    }
+    
     public void buildBoard(String config){
         System.out.println("Se agregan las piezas al board");
     }

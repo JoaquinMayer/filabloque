@@ -13,7 +13,6 @@ public class Player {
     private String name;
     private String alias;
     private int age;
-    private String color;
 
     public Player(String name, String alias, int age) {
         this.name = name;

@@ -17,7 +17,7 @@ public class Main {
     private Game game;
 
     public Main() {
-        this.players = null;
+        this.players = new ArrayList<>();
         this.game = null;
     }
 
@@ -41,6 +41,7 @@ public class Main {
         int i = 1;
         for (Player player : players) {
             System.out.println(i + ". " + player.getName());
+            i++;
         }   
     }
     
@@ -51,20 +52,20 @@ public class Main {
     private boolean isValidAlias(String alias) {
         if (alias == null) {
             return false;
-        }
+        } 
         
-        for (Player player : this.players) {
-            if (player.getAlias().equals(alias)) {
-                return false;
+        if (!(this.players == null)) {        
+            for (Player player : this.players) {
+                if (player.getAlias().equals(alias)) {
+                    return false;
+                }
             }
         }
         
         return true;
     }
     
-    public void startSystem() {
-        int menuOption = 0;
-        
+    public void startSystem() {        
         System.out.println("Bienvenido a Fila y Bloque");
         System.out.println("__________________________");
         System.out.println();
@@ -73,6 +74,7 @@ public class Main {
     }
     
     private void menu () {
+        Scanner scan = new Scanner(System.in);
         int option = 0;
         
         while (option == 0) {
@@ -85,8 +87,10 @@ public class Main {
             System.out.println("__________________________");
 
             try {
-                Scanner scan = new Scanner(System.in);
+                System.out.println();
+                System.out.print("Ingrese una opcion: ");
                 option = scan.nextInt();
+                System.out.println();
             }
                  catch(Exception ex)
             {
@@ -120,63 +124,72 @@ public class Main {
         try {
             System.out.println("Nuevo jugador");
             System.out.println("__________________________");
+            System.out.println();
             
-            System.out.println("Ingrese el nombre del jugador:");
+            System.out.print("Ingrese el nombre del jugador: ");
             String userName = scan.nextLine();
 
-            System.out.println("Ingrese un alias:");
+            System.out.print("Ingrese un alias: ");
             while (userAlias == null) {
                 userAlias = scan.nextLine();
-                
                 userAlias = this.isValidAlias(userAlias) ? userAlias : null;
                 
                 if (userAlias == null) {
-                    System.out.println("El alias ya existe, por favor ingrese otro alias:");
+                    System.out.println();
+                    System.out.print("El alias ya existe, por favor ingrese otro alias:");
                 }
             }
 
-            
-            System.out.println("Ingrese la edad:");
+            System.out.print("Ingrese la edad: ");
             int userAge = scan.nextInt();
-            
+                        
             Player newPlayer = new Player(userName, userAlias, userAge);
             this.addPlayer(newPlayer);
+            System.out.println("El usuario " + newPlayer.getName() + " se ha creado correctamente.");
+            System.out.println();
+            this.menu();
         }
         catch(Exception ex)
         {
-           System.out.println("Algun campo no es valido!");
+           System.out.println("Algun campo no es valido.");
         }
     }
     
     private void newGame() {
+        Scanner scan = new Scanner(System.in);
         int player = 0;
-        ArrayList<Player> players = null;
+        ArrayList<Player> players = new ArrayList<>();
 
         System.out.println("Nuevo juego");
         System.out.println("__________________________");
         
         for (int i = 1; i <= 2; i++) {
-            System.out.println("Seleccione el jugador " + i + ":");
-            System.out.println();
-            
             while (player == 0) {
                 this.showPlayers(this.players);
                 
                 try {
-                    Scanner scan = new Scanner(System.in);
+                    System.out.println();
+                    System.out.print("Seleccione el jugador " + i + ":");                    
                     player = scan.nextInt();
-                    players.add(this.players.get(i-1));
+                    System.out.println();
+
+                    if (player > 0) {
+                        players.add(this.players.get(player - 1));
+                    } else {
+                        System.out.println("Por favor ingrese una opcion valida.");
+                    }
                 }
                 catch(Exception ex)
                 {
-                   System.out.println("Por favor ingrese una opcion valida");
+                   System.out.println("Por favor ingrese una opcion valida.");
                    player = 0;
                 }
             }
         }
         
-//        Game game = new Game(players.get(0), players.get(1));
-//        game.startGame();
+        Game game = new Game(players.get(0), players.get(1));
+        game.startGame();
+        this.menu();
     }
     
     private void showRanking(String order) {
