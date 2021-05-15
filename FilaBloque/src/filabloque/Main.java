@@ -39,7 +39,7 @@ public class Main {
         this.players = players;
     }
 
-    private void showPlayers(String order) {
+    private void showPlayers(String order, Player filterPlayer) {
         int i = 1;
 
         if (order.equals("games")) {
@@ -53,8 +53,13 @@ public class Main {
         }
 
         for (Player player : this.players) {
-            System.out.println(i + ". " + player.getName() + " " + player.getGamesWon());
-            i++;
+            if (!player.equals(filterPlayer)) {
+                System.out.println(i + ". " + player.getName() + " " + player.getGamesWon());
+                i++;
+            } else {
+                i++;
+            }
+
         }
     }
 
@@ -177,7 +182,11 @@ public class Main {
         for (int i = 1; i <= 2; i++) {
             int player = 0;
             while (player == 0) {
-                this.showPlayers("alphabetical");
+                if (players.size() > 0) {
+                    this.showPlayers("alphabetical", players.get(0));
+                } else {
+                    this.showPlayers("alphabetical", null);
+                }
 
                 try {
                     System.out.println();
@@ -186,7 +195,12 @@ public class Main {
                     System.out.println();
 
                     if (player > 0 && !(player - 1 > this.players.size())) {
-                        players.add(this.players.get(player - 1));
+                        if (players.size() > 0 && players.get(0).equals(this.players.get(player - 1))) {
+                            System.out.println("Por favor ingrese una opcion valida.");
+                            player = 0;
+                        } else {
+                            players.add(this.players.get(player - 1));
+                        }
                     } else {
                         System.out.println("Por favor ingrese una opcion valida.");
                         player = 0;
@@ -204,7 +218,7 @@ public class Main {
     }
 
     private void showRanking(String order) {
-        this.showPlayers(order);
+        this.showPlayers(order, null);
         this.menu();
     }
 
