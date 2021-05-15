@@ -12,18 +12,18 @@ package filabloque;
 public class Game {
     private Player player1;
     private Player player2;
-    private Piece[][] board;
-    private int turn;
+    private Board board;
+    private String turn;
     private int playTurn;
     private boolean[][] completedDesigns;
 
-    public Game(Player player1, Player player2, Piece[][] board, int turn, int playTurn, boolean[][] completedDesigns) {
+    public Game(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
-        this.board = board;
-        this.turn = turn;
-        this.playTurn = playTurn;
-        this.completedDesigns = completedDesigns;
+        this.board = null;
+        this.turn = "";
+        this.playTurn = 1;
+        this.completedDesigns = null;
     }
 
     public Player getPlayer1() {
@@ -42,19 +42,19 @@ public class Game {
         this.player2 = player2;
     }
 
-    public Piece[][] getBoard() {
+    public Board getBoard() {
         return board;
     }
 
-    public void setBoard(Piece[][] board) {
+    public void setBoard(Board board) {
         this.board = board;
     }
 
-    public int getTurn() {
+    public String getTurn() {
         return turn;
     }
 
-    public void setTurn(int turn) {
+    public void setTurn(String turn) {
         this.turn = turn;
     }
 

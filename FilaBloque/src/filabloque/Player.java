@@ -15,11 +15,10 @@ public class Player {
     private int age;
     private String color;
 
-    public Player(String name, String alias, int age, String color) {
+    public Player(String name, String alias, int age) {
         this.name = name;
         this.alias = alias;
         this.age = age;
-        this.color = color;
     }
 
     public String getName() {
@@ -44,16 +43,5 @@ public class Player {
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-    
-    
-    
+    }    
 }
