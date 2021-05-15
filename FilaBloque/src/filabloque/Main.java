@@ -17,6 +17,7 @@ public class Main {
 
     private ArrayList<Player> players;
     private Game game;
+    private boolean exit = false;
 
     public Main() {
         this.players = new ArrayList<>();
@@ -39,10 +40,18 @@ public class Main {
         this.players = players;
     }
 
-    private void showPlayers(String order, Player filterPlayer) {
+    public boolean isExit() {
+        return exit;
+    }
+
+    public void setExit(boolean exit) {
+        this.exit = exit;
+    }
+
+    private void showPlayers(int order, Player filterPlayer) {
         int i = 1;
 
-        if (order.equals("games")) {
+        if (order == 1) {
             Collections.sort(this.players, (Player p1, Player p2) -> {
                 return Integer.valueOf(p2.getGamesWon()).compareTo(p1.getGamesWon());
             });
@@ -88,7 +97,11 @@ public class Main {
         System.out.println("__________________________");
         System.out.println();
 
-        this.menu();
+        while (!this.isExit()) {
+            this.menu();
+        }
+        
+        this.exit();
     }
 
     private void menu() {
@@ -119,21 +132,18 @@ public class Main {
         System.out.println();
 
         switch (option) {
-            case 1:
+            case 1 ->
                 this.newPlayer();
-                break;
-            case 2:
+            case 2 ->
                 this.newGame();
-                break;
-            case 3:
-                this.showRanking("games");
-                break;
-            case 4:
-                this.exit();
-                break;
-            default:
+            case 3 ->
+                this.showRanking();
+            case 4 ->
+                this.setExit(true);
+            default ->
                 System.out.println("Opcion no valida!");
         }
+
     }
 
     private void newPlayer() {
@@ -166,7 +176,6 @@ public class Main {
             this.addPlayer(newPlayer);
             System.out.println("El usuario " + newPlayer.getName() + " se ha creado correctamente.");
             System.out.println();
-            this.menu();
         } catch (Exception ex) {
             System.out.println("Algun campo no es valido." + ex);
         }
@@ -183,9 +192,9 @@ public class Main {
             int player = 0;
             while (player == 0) {
                 if (players.size() > 0) {
-                    this.showPlayers("alphabetical", players.get(0));
+                    this.showPlayers(2, players.get(0));
                 } else {
-                    this.showPlayers("alphabetical", null);
+                    this.showPlayers(2, null);
                 }
 
                 try {
@@ -214,12 +223,42 @@ public class Main {
 
         Game game = new Game(players.get(0), players.get(1));
         game.startGame();
-        this.menu();
     }
 
-    private void showRanking(String order) {
-        this.showPlayers(order, null);
-        this.menu();
+    private void showRanking() {
+        Scanner scan = new Scanner(System.in);
+        int option = 0;
+
+        while (option == 0) {
+            System.out.println("Seleccione el orden del ranking");
+            System.out.println("__________________________");
+            System.out.println("1. Juegos Ganados");
+            System.out.println("2. Alfabeticamente");
+            System.out.println("3. Salir");
+            System.out.println("__________________________");
+            System.out.println();
+
+            try {
+                System.out.print("Ingrese una opcion: ");
+                option = scan.nextInt();
+                scan.nextLine();
+
+                if (option < 0 && option > 3) {
+                    System.out.print("Ingrese una opcion valida");
+                    option = 0;
+                }
+            } catch (Exception e) {
+                System.out.println("Por favor ingrese una opcion valida");
+                option = 0;
+                scan.nextLine();
+            }
+
+        }
+
+        if (option != 3) {
+            this.showPlayers(option, null);
+        }
+
     }
 
     private void exit() {
