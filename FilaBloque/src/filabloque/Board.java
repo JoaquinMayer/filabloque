@@ -47,7 +47,7 @@ public class Board {
         this.designBoard = designBoard;
     }
 
-    private Boolean makeMove(String play, int turn, int player) {
+    public Boolean makeMove(String play, int turn, int player) {
         Boolean isValid = false;
         String action = play.split(" ")[0];
         if (action.equals("M")) {

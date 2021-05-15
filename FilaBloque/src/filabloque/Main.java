@@ -102,7 +102,6 @@ public class Main {
                 System.out.println();
                 System.out.print("Ingrese una opcion: ");
                 option = scan.nextInt();
-                scan.nextLine();
             }
             catch(Exception ex) {
                System.out.println("Por favor ingrese una opcion valida");
