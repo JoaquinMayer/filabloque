@@ -58,14 +58,13 @@ public class Board {
         this.config = config;
     }
 
-    // validate if the actual & next positions are inside the board, &
+    // validate if the actual & next positions are inside the board & the movement is valid
     private boolean isValidMovement(String from, String to, int rowFrom, int columnFrom, int rowTo, int columnTo) {
         return (!from.equals(to) && rowFrom >= 0 && rowFrom < 4 && columnFrom >= 0 && columnFrom < 4 && rowTo >= 0 && rowTo < 4 && columnTo >= 0 && columnTo < 4)
                 && (rowTo == rowFrom || rowTo == rowFrom - 1 || rowTo == rowFrom + 1) && (columnTo == columnFrom || columnTo == columnFrom - 1 || columnTo == columnFrom + 1);
     }
 
     private boolean isPlayerPiece(int x, int y, int player) {
-
         if (player == 1) {
             return this.getBoard()[x][y] == 1 || this.getBoard()[x][y] == 2;
         } else {

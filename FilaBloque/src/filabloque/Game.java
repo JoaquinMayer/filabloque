@@ -6,6 +6,8 @@
 package filabloque;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -217,7 +219,25 @@ public class Game {
     }
 
     private boolean isValidFormatPlay(String play) {
-        return true;
+        boolean isValidFormatPlay = false;
+        String[] playParams = play.split(" ");
+        String action = playParams[0];
+        String firstPosition = playParams[1];
+
+        Pattern positions = Pattern.compile("A1|A2|A3|A4|B1|B2|B3|B4|C1|C2|C3|C4|D1|D2|D3|D4");
+
+        try {
+            if (action.equalsIgnoreCase("I")) {
+                isValidFormatPlay = positions.matcher(firstPosition).matches();
+            } else if (action.equalsIgnoreCase("M")) {
+                String secondPosition = playParams[2];
+                isValidFormatPlay = positions.matcher(firstPosition).matches() && positions.matcher(secondPosition).matches();
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        
+        return isValidFormatPlay;
     }
 
     public void checkTurn() {
