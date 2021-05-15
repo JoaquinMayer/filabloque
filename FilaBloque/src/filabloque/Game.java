@@ -20,12 +20,16 @@ public class Game {
     private boolean[][] completedDesigns;
     private boolean finishedGame;
 
+    private String ANSI_RESET = "\u001B[0m";
+    private String ANSI_RED = "\u001B[31m";
+    private String ANSI_BLUE = "\u001B[34m";
+
     public Game(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
         this.board = null;
         this.playerTurn = 1;
-        this.completedDesigns = new boolean[][] {{false,false}, {false,false}};
+        this.completedDesigns = new boolean[][]{{false, false}, {false, false}};
         this.finishedGame = false;
     }
 
@@ -110,7 +114,7 @@ public class Game {
                 System.out.println("3. Salir");
                 System.out.println("__________________________");
                 System.out.println();
-                System.out.print("Ingrese una opcion: ");
+                System.out.println("Ingrese una opcion: ");
                 boardConfigOption = scan.nextInt();
 
                 if (boardConfigOption > 0 && boardConfigOption <= 3) {
@@ -137,7 +141,7 @@ public class Game {
                 System.out.println("3. Salir");
                 System.out.println("__________________________");
                 System.out.println();
-                System.out.print("Ingrese una opcion: ");
+                System.out.println("Ingrese una opcion: ");
                 sizeOption = scan.nextInt();
 
                 if (sizeOption > 0 && sizeOption <= 3) {
@@ -161,11 +165,12 @@ public class Game {
 
         if (this.playerTurn == 1) {
             actualPlayerName = this.player1.getName();
+            System.out.print("Es el turno de " + ANSI_RED + actualPlayerName + ANSI_RESET);
         } else {
             actualPlayerName = this.player2.getName();
+            System.out.print("Es el turno de " + ANSI_BLUE + actualPlayerName + ANSI_RESET);
         }
 
-        System.out.print("Es el turno de " + actualPlayerName);
         System.out.println();
 
         for (int i = 1; i <= 2; i++) {
@@ -196,7 +201,7 @@ public class Game {
 
         while (!validPlay) {
             try {
-                System.out.print("Inrese la siguiente jugada (turno " + turn + "): ");
+                System.out.print("Ingrese la siguiente jugada (turno " + turn + "): ");
                 play = scan.nextLine();
 
                 if (this.isValidFormatPlay(play)) {
