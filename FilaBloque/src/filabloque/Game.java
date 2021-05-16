@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package filabloque;
 
 import java.io.File;
@@ -16,7 +11,8 @@ import javax.sound.sampled.DataLine;
 
 /**
  *
- * @author joaquin
+ * @authors Agustin Tosar & Joaquin Mayer
+ * 
  */
 public class Game {
 
@@ -197,10 +193,10 @@ public class Game {
 
         if (this.playerTurn == 1) {
             actualPlayerName = this.player1.getName();
-            System.out.print("Es el turno de " + ANSI_RED + actualPlayerName + ANSI_RESET);
+            System.out.print("Es el turno de " + RED_COLOR + actualPlayerName + RESET_COLOR);
         } else {
             actualPlayerName = this.player2.getName();
-            System.out.print("Es el turno de " + ANSI_BLUE + actualPlayerName + ANSI_RESET);
+            System.out.print("Es el turno de " + BLUE_COLOR + actualPlayerName + RESET_COLOR);
         }
 
         System.out.println();
