@@ -151,9 +151,9 @@ public class Game {
 
         while (sizeOption == 0) {
             try {
-                System.out.println("Tamano del tablero");
+                System.out.println("Tamaño del tablero");
                 System.out.println("__________________________");
-                System.out.println("(Elija el tamano en que desea ver el tablero)");
+                System.out.println("(Elija el tamaño en que desea ver el tablero)");
                 System.out.println();
                 System.out.println("1. Normal");
                 System.out.println("2. Grande");
