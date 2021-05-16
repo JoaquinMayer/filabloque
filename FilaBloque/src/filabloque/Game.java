@@ -27,6 +27,7 @@ public class Game {
     private boolean[][] completedDesigns;
     private boolean finishedGame;
     private boolean exitGame = false;
+    
     private String ANSI_RESET = "\u001B[0m";
     private String ANSI_RED = "\u001B[31m";
     private String ANSI_BLUE = "\u001B[34m";
@@ -136,7 +137,7 @@ public class Game {
                 System.out.println("3. Salir");
                 System.out.println("__________________________");
                 System.out.println();
-                System.out.println("Ingrese una opcion: ");
+                System.out.print("Ingrese una opcion: ");
                 boardConfigOption = scan.nextInt();
 
                 if (boardConfigOption > 0 && boardConfigOption <= 3) {
@@ -168,7 +169,7 @@ public class Game {
                 System.out.println("3. Salir");
                 System.out.println("__________________________");
                 System.out.println();
-                System.out.println("Ingrese una opcion: ");
+                System.out.print("Ingrese una opcion: ");
                 sizeOption = scan.nextInt();
 
                 if (sizeOption > 0 && sizeOption <= 3) {
@@ -244,7 +245,7 @@ public class Game {
         while (!validPlay && !play.equalsIgnoreCase("X")) {
             try {
                 System.out.print("Ingrese la siguiente jugada (turno " + turn + "): ");
-                play = scan.nextLine();
+                play = scan.nextLine().toUpperCase();
 
                 if (!play.equalsIgnoreCase("X")) {
                     if (this.isValidFormatPlay(play)) {

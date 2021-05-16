@@ -18,7 +18,6 @@ public class Board {
     private int[][] board;
     private int designBoard;
     private int config;
-//    private String referencesPieces[] = {"", "Frente Rojo", "Dorso Rojo", "Frente Azul", "Dorso Azul"};
 
     private final String ANSI_RESET = "\u001B[0m";
     private final String ANSI_RED = "\u001B[31m";
@@ -258,15 +257,16 @@ public class Board {
         String action = play.split(" ")[0];
 
         if (action.equals("M")) {
-            isValid = this.movePiece(play, turn, player, isValid);
+            isValid = this.movePiece(play, turn, player);
         } else {
-            isValid = this.invertPiece(play, turn, player, isValid);
+            isValid = this.invertPiece(play, turn, player);
         }
 
         return isValid;
     }
 
-    private boolean movePiece(String play, int turn, int player, boolean isValid) {
+    private boolean movePiece(String play, int turn, int player) {
+        Boolean isValid = false;
         String from = play.split(" ")[1];
         String letterFrom = from.split("")[0];
         int rowFrom = positionLetter(letterFrom);
@@ -305,7 +305,8 @@ public class Board {
         return isValid;
     }
 
-    private boolean invertPiece(String play, int turn, int player, boolean isValid) {
+    private boolean invertPiece(String play, int turn, int player) {
+        Boolean isValid = false;
         String invert = play.split(" ")[1];
         String letter = invert.split("")[0];
         int row = positionLetter(letter);
