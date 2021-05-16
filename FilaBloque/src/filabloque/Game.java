@@ -12,7 +12,7 @@ import javax.sound.sampled.DataLine;
 /**
  *
  * @authors Agustin Tosar & Joaquin Mayer
- * 
+ *
  */
 public class Game {
 
@@ -20,7 +20,7 @@ public class Game {
     private Player player2;
     private Board board;
     private int playerTurn;
-    private boolean[][] completedDesigns;
+    private boolean[] completedDesigns;
     private boolean finishedGame;
     private boolean exitGame = false;
     private String RESET_COLOR = "\u001B[0m";
@@ -32,7 +32,7 @@ public class Game {
         this.player2 = player2;
         this.board = null;
         this.playerTurn = 1;
-        this.completedDesigns = new boolean[][]{{false, false}, {false, false}};
+        this.completedDesigns = new boolean[]{false, false, false, false};
         this.finishedGame = false;
     }
 
@@ -68,11 +68,11 @@ public class Game {
         this.playerTurn = playTurn;
     }
 
-    public boolean[][] getCompletedDesigns() {
+    public boolean[] getCompletedDesigns() {
         return completedDesigns;
     }
 
-    public void setCompletedDesigns(boolean[][] completedDesigns) {
+    public void setCompletedDesigns(boolean[] completedDesigns) {
         this.completedDesigns = completedDesigns;
     }
 
@@ -285,8 +285,9 @@ public class Game {
     }
 
     private void checkCompletedDesigns() {
+        System.out.println();
         try {
-            boolean updatedCompletedDesigns[][] = this.getCompletedDesigns();
+            boolean[] updatedCompletedDesigns = this.getCompletedDesigns().clone();
 
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 4; j++) {
@@ -308,15 +309,12 @@ public class Game {
 
                         if (horizontalDesign || verticalDesign) {
                             if (pieceToCheck == 1) {
-                                updatedCompletedDesigns[0][0] = true;
-                                System.out.println(this.getPlayer1().getName() + " completo la fila");
+                                updatedCompletedDesigns[0] = true;
                             } else {
-                                updatedCompletedDesigns[1][0] = true;
-                                System.out.println(this.getPlayer2().getName() + " completo la fila");
+                                updatedCompletedDesigns[2] = true;
                             }
                         }
 
-                        this.setCompletedDesigns(updatedCompletedDesigns);
                     } else if (this.board.getBoard()[i][j] == 2 || this.board.getBoard()[i][j] == 4) {
                         int pieceToCheck = this.board.getBoard()[i][j];
                         boolean blockDesign = false;
@@ -327,19 +325,32 @@ public class Game {
                         if (blockDesign) {
 
                             if (pieceToCheck == 2) {
-                                updatedCompletedDesigns[0][1] = true;
-                                System.out.println(this.getPlayer1().getName() + " completo el bloque");
+                                updatedCompletedDesigns[1] = true;
                             } else {
-                                updatedCompletedDesigns[1][1] = true;
-                                System.out.println(this.getPlayer2().getName() + " completo el bloque");
+                                updatedCompletedDesigns[3] = true;
                             }
 
-                            this.setCompletedDesigns(updatedCompletedDesigns);
                         }
                     }
 
                 }
             }
+
+            if (updatedCompletedDesigns[0] && !this.getCompletedDesigns()[0]) {
+                System.out.println("El jugador " + this.getPlayer1().getName() + " completo el diseño de fila");
+            } else if (updatedCompletedDesigns[1] && !this.getCompletedDesigns()[1]) {
+                System.out.println("El jugador " + this.getPlayer1().getName() + " completo el diseño de bloque");
+            } else if (updatedCompletedDesigns[2] && !this.getCompletedDesigns()[2]) {
+                System.out.println("El jugador " + this.getPlayer2().getName() + " completo el diseño de bloque");
+            } else if (updatedCompletedDesigns[3] && !this.getCompletedDesigns()[3]) {
+                System.out.println("El jugador " + this.getPlayer2().getName() + " completo el diseño de bloque");
+            } else {
+                System.out.println("No se realizaron diseños");
+            }
+            System.out.println();
+
+            this.setCompletedDesigns(updatedCompletedDesigns);
+
         } catch (Exception e) {
             System.out.println("Error en chequeo");
         }
@@ -348,14 +359,13 @@ public class Game {
 
     private boolean checkWinner() {
         boolean gameFinished = true;
-        boolean[][] completedDesigns = this.getCompletedDesigns();
-
-        if (completedDesigns[0][0] && completedDesigns[0][1] && completedDesigns[1][0] && completedDesigns[1][1]) {
+        System.out.println();
+        if (this.getCompletedDesigns()[0] && this.getCompletedDesigns()[1] && this.getCompletedDesigns()[2] && this.getCompletedDesigns()[3]) {
             System.out.println("Es un empate");
-        } else if (completedDesigns[0][0] && completedDesigns[1][0]) {
+        } else if (this.getCompletedDesigns()[0] && this.getCompletedDesigns()[1]) {
             this.player1.setGamesWon(this.getPlayer1().getGamesWon() + 1);
             System.out.println("Ha ganado el jugador " + this.getPlayer1().getName());
-        } else if (completedDesigns[0][1] && completedDesigns[1][1]) {
+        } else if (this.getCompletedDesigns()[2] && this.getCompletedDesigns()[3]) {
             this.player2.setGamesWon(this.getPlayer2().getGamesWon() + 1);
             System.out.println("Ha ganado el jugador " + this.getPlayer2().getName());
         } else {
