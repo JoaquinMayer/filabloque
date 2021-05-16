@@ -188,42 +188,49 @@ public class Main {
         System.out.println("Nuevo juego");
         System.out.println("__________________________");
 
-        for (int i = 1; i <= 2; i++) {
-            int player = 0;
-            while (player == 0) {
-                if (players.size() > 0) {
-                    this.showPlayers(2, players.get(0));
-                } else {
-                    this.showPlayers(2, null);
-                }
+        if (this.players.size() > 1) {
+            for (int i = 1; i <= 2; i++) {
+                int player = 0;
+                while (player == 0) {
+                    if (players.size() > 0) {
+                        this.showPlayers(2, players.get(0));
+                    } else {
+                        this.showPlayers(2, null);
+                    }
 
-                try {
-                    System.out.println();
-                    System.out.print("Seleccione el jugador " + i + ": ");
-                    player = scan.nextInt();
-                    System.out.println();
+                    try {
+                        System.out.println();
+                        System.out.print("Seleccione el jugador " + i + ": ");
+                        player = scan.nextInt();
+                        System.out.println();
 
-                    if (player > 0 && !(player - 1 > this.players.size())) {
-                        if (players.size() > 0 && players.get(0).equals(this.players.get(player - 1))) {
+                        if (player > 0 && !(player - 1 > this.players.size())) {
+                            if (players.size() > 0 && players.get(0).equals(this.players.get(player - 1))) {
+                                System.out.println("Por favor ingrese una opcion valida.");
+                                player = 0;
+                            } else {
+                                players.add(this.players.get(player - 1));
+                            }
+                        } else {
                             System.out.println("Por favor ingrese una opcion valida.");
                             player = 0;
-                        } else {
-                            players.add(this.players.get(player - 1));
                         }
-                    } else {
+                    } catch (Exception ex) {
                         System.out.println("Por favor ingrese una opcion valida.");
+                        scan.next();
                         player = 0;
                     }
-                } catch (Exception ex) {
-                    System.out.println("Por favor ingrese una opcion valida.");
-                    scan.next();
-                    player = 0;
                 }
             }
+
+            Game game = new Game(players.get(0), players.get(1));
+            game.startGame();
+        } else {
+            System.out.println();
+            System.out.println("No hay suficientes jugadores");
+            System.out.println();
         }
 
-        Game game = new Game(players.get(0), players.get(1));
-        game.startGame();
     }
 
     private void showRanking() {
