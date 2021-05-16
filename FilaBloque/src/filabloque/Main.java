@@ -122,11 +122,11 @@ public class Main {
 
             try {
                 System.out.println();
-                System.out.print("Ingrese una opcion: ");
+                System.out.print("Ingrese una opción: ");
                 option = scan.nextInt();
                 scan.nextLine();
             } catch (Exception ex) {
-                System.out.println("Por favor ingrese una opcion valida");
+                System.out.println("Por favor ingrese una opción válida:");
                 option = 0;
                 scan.nextLine();
             }
@@ -144,7 +144,7 @@ public class Main {
             case 4 ->
                 this.setExit(true);
             default ->
-                System.out.println("Opcion no valida!");
+                System.out.println("Opción inválida!");
         }
 
     }
@@ -162,7 +162,7 @@ public class Main {
             String userName = scan.nextLine();
 
             while (userName.equals("")) {
-                System.out.print("El nombre no puede estar vacio, por favor ingrese un nombre valido: ");
+                System.out.print("El nombre no puede estar vacío, por favor ingrese un nombre valido: ");
                 userName = scan.nextLine();
             }
 
@@ -175,7 +175,7 @@ public class Main {
                     System.out.println();
                     System.out.print("El alias ya existe, por favor ingrese otro alias:");
                 } else if (userAlias.equals("")) {
-                    System.out.print("El alias no puede estar vacio, por favor ingrese un alias valido: ");
+                    System.out.print("El alias no puede estar vacío, por favor ingrese un alias valido: ");
                 }
             }
 
@@ -185,7 +185,7 @@ public class Main {
                 try {
                     userAge = scan.nextInt();
                 } catch (Exception e) {
-                    System.out.println("Edad no valida. Por favor, ingrese una edad valida");
+                    System.out.println("Edad no válida. Por favor, ingrese una edad válida");
                     userAge = 0;
                     scan.nextLine();
                 }
@@ -231,17 +231,17 @@ public class Main {
 
                         if (player > 0 && !(player - 1 > this.players.size())) {
                             if (players.size() > 0 && players.get(0).equals(this.players.get(player - 1))) {
-                                System.out.println("Por favor ingrese una opcion valida.");
+                                System.out.println("Por favor ingrese una opción válida.");
                                 player = 0;
                             } else {
                                 players.add(this.players.get(player - 1));
                             }
                         } else {
-                            System.out.println("Por favor ingrese una opcion valida.");
+                            System.out.println("Por favor ingrese una opción válida.");
                             player = 0;
                         }
                     } catch (Exception ex) {
-                        System.out.println("Por favor ingrese una opcion valida.");
+                        System.out.println("Por favor ingrese una opción válida.");
                         scan.next();
                         player = 0;
                     }
@@ -268,22 +268,22 @@ public class Main {
                 System.out.println("Seleccione el orden del ranking");
                 System.out.println("__________________________");
                 System.out.println("1. Juegos Ganados");
-                System.out.println("2. Alfabeticamente");
+                System.out.println("2. Alfabéticamente");
                 System.out.println("3. Salir");
                 System.out.println("__________________________");
                 System.out.println();
 
                 try {
-                    System.out.print("Ingrese una opcion: ");
+                    System.out.print("Ingrese una opción: ");
                     option = scan.nextInt();
                     scan.nextLine();
 
                     if (option < 0 && option > 3) {
-                        System.out.print("Ingrese una opcion valida");
+                        System.out.print("Ingrese una opción válida");
                         option = 0;
                     }
                 } catch (Exception e) {
-                    System.out.println("Por favor ingrese una opcion valida");
+                    System.out.println("Por favor ingrese una opción válida");
                     option = 0;
                     scan.nextLine();
                 }
