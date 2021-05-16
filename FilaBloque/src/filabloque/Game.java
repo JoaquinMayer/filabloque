@@ -286,7 +286,7 @@ public class Game {
 
     private void checkCompletedDesigns() {
         try {
-            boolean updatedCompletedDesigns[][] = this.getCompletedDesigns();
+            boolean updatedCompletedDesigns[][] = this.getCompletedDesigns().clone();
 
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 4; j++) {
@@ -348,17 +348,20 @@ public class Game {
 
     private boolean checkWinner() {
         boolean gameFinished = true;
-        boolean[][] completedDesigns = this.getCompletedDesigns();
+        boolean[][] completedDesigns = this.getCompletedDesigns().clone();
 
         if (completedDesigns[0][0] && completedDesigns[0][1] && completedDesigns[1][0] && completedDesigns[1][1]) {
             System.out.println("Es un empate");
-        } else if (completedDesigns[0][0] && completedDesigns[1][0]) {
+        } 
+        else if (completedDesigns[0][0] && completedDesigns[1][0]) {
             this.player1.setGamesWon(this.getPlayer1().getGamesWon() + 1);
             System.out.println("Ha ganado el jugador " + this.getPlayer1().getName());
-        } else if (completedDesigns[0][1] && completedDesigns[1][1]) {
+        } 
+        else if (completedDesigns[0][1] && completedDesigns[1][1]) {
             this.player2.setGamesWon(this.getPlayer2().getGamesWon() + 1);
             System.out.println("Ha ganado el jugador " + this.getPlayer2().getName());
-        } else {
+        } 
+        else {
             gameFinished = false;
         }
 

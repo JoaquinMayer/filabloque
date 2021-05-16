@@ -31,7 +31,7 @@ public class Board {
     public void setBoard(int[][] board) {
         this.board = board;
     }
-    
+
     private void setBoardPosition(int x, int y, int value) {
         this.board[x][y] = value;
     }
@@ -276,28 +276,31 @@ public class Board {
             if (turn == 1) {
                 if (player == 1) {
                     if (this.isPlayerPiece(rowFrom, columnFrom, 1)) {
-                        int tmp = this.getBoard()[rowFrom][columnFrom];
-                        this.setBoardPosition(rowFrom, columnFrom, this.getBoard()[rowTo][columnTo]);
-                        this.setBoardPosition(rowTo, columnTo, tmp);
-                        isValid = true;
+                        isValid = this.movement(rowFrom, columnFrom, rowTo, columnTo);
                     }
                 } else {
                     if (this.isPlayerPiece(rowFrom, columnFrom, 2)) {
-                        int tmp = this.getBoard()[rowFrom][columnFrom];
-                        this.setBoardPosition(rowFrom, columnFrom, this.getBoard()[rowTo][columnTo]);
-                        this.setBoardPosition(rowTo, columnTo, tmp);
-                        isValid = true;
+                        isValid = this.movement(rowFrom, columnFrom, rowTo, columnTo);
                     }
                 }
             } else {
-                int tmp = this.getBoard()[rowFrom][columnFrom];
-                this.setBoardPosition(rowFrom, columnFrom, this.getBoard()[rowTo][columnTo]);
-                this.setBoardPosition(rowTo, columnTo, tmp);
-                isValid = true;
+                isValid = this.movement(rowFrom, columnFrom, rowTo, columnTo);
             }
         }
 
         return isValid;
+    }
+
+    private boolean movement(int rowFrom, int columnFrom, int rowTo, int columnTo) {
+        try {
+            int tmp = this.getBoard()[rowFrom][columnFrom];
+            this.setBoardPosition(rowFrom, columnFrom, this.getBoard()[rowTo][columnTo]);
+            this.setBoardPosition(rowTo, columnTo, tmp);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 
     private boolean invertPiece(String play, int turn, int player) {
