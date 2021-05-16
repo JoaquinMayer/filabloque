@@ -23,10 +23,9 @@ public class Game {
     private boolean[][] completedDesigns;
     private boolean finishedGame;
     private boolean exitGame = false;
-    
-    private String ANSI_RESET = "\u001B[0m";
-    private String ANSI_RED = "\u001B[31m";
-    private String ANSI_BLUE = "\u001B[34m";
+    private String RESET_COLOR = "\u001B[0m";
+    private String RED_COLOR = "\u001B[31m";
+    private String BLUE_COLOR = "\u001B[34m";
 
     public Game(Player player1, Player player2) {
         this.player1 = player1;
