@@ -158,26 +158,43 @@ public class Main {
             System.out.print("Ingrese el nombre del jugador: ");
             String userName = scan.nextLine();
 
+            while (userName.equals("")) {
+                System.out.print("El nombre no puede estar vacio, por favor ingrese un nombre valido: ");
+                userName = scan.nextLine();
+            }
+
             System.out.print("Ingrese un alias: ");
-            while (userAlias == null) {
+            while (userAlias == null || userAlias.equals("")) {
                 userAlias = scan.nextLine();
                 userAlias = this.isValidAlias(userAlias) ? userAlias : null;
 
                 if (userAlias == null) {
                     System.out.println();
                     System.out.print("El alias ya existe, por favor ingrese otro alias:");
+                } else if (userAlias.equals("")) {
+                    System.out.print("El alias no puede estar vacio, por favor ingrese un alias valido: ");
                 }
             }
 
             System.out.print("Ingrese la edad: ");
-            int userAge = scan.nextInt();
+            int userAge = 0;
+            while (userAge == 0) {
+                try {
+                    userAge = scan.nextInt();
+                } catch (Exception e) {
+                    System.out.println("Edad no valida. Por favor, ingrese una edad valida");
+                    userAge = 0;
+                    scan.nextLine();
+                }
+
+            }
 
             Player newPlayer = new Player(userName, userAlias, userAge);
             this.addPlayer(newPlayer);
             System.out.println("El usuario " + newPlayer.getName() + " se ha creado correctamente.");
             System.out.println();
         } catch (Exception ex) {
-            System.out.println("Algun campo no es valido." + ex);
+            System.out.println("Algun campo no es valido." + ex); // TODO: Eliminar el + ex
         }
     }
 
