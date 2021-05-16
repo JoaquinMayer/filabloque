@@ -109,7 +109,7 @@ public class Main {
     private void menu() {
         Scanner scan = new Scanner(System.in);
         int option = 0;
-
+        
         while (option == 0) {
             System.out.println();
             System.out.println("#############################");

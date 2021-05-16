@@ -5,8 +5,14 @@
  */
 package filabloque;
 
+import java.io.File;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 
 /**
  *
@@ -91,6 +97,8 @@ public class Game {
     }
 
     public void startGame() {
+        
+        this.playSound();
         System.out.println("Juego iniciado");
         System.out.println("__________________________");
         System.out.println();
@@ -271,7 +279,7 @@ public class Game {
         } catch (Exception e) {
             return false;
         }
-        
+
         return isValidFormatPlay;
     }
 
@@ -344,7 +352,7 @@ public class Game {
 
     private boolean checkWinner() {
         boolean gameFinished = true;
-        boolean[][] completedDesigns = this.getCompletedDesigns();       
+        boolean[][] completedDesigns = this.getCompletedDesigns();
 
         if (completedDesigns[0][0] && completedDesigns[0][1] && completedDesigns[1][0] && completedDesigns[1][1]) {
             System.out.println("Es un empate");
@@ -400,5 +408,24 @@ public class Game {
             this.setFinishedGame(true);
         }
 
+    }
+
+    public void playSound() {
+        try {
+            File file = new File("./src/sounds/crowdclaps.wav");
+            AudioInputStream stream;
+            AudioFormat format;
+            DataLine.Info info;
+            Clip clip;
+
+            stream = AudioSystem.getAudioInputStream(file);
+            format = stream.getFormat();
+            info = new DataLine.Info(Clip.class, format);
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(stream);
+            clip.start();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
