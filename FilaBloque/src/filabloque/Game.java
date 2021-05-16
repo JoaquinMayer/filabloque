@@ -215,8 +215,8 @@ public class Game {
         while (!validPlay) {
             try {
                 System.out.print("Ingrese la siguiente jugada (turno " + turn + "): ");
-                play = scan.nextLine();
-
+                play = scan.nextLine().toUpperCase();
+                
                 if (this.isValidFormatPlay(play)) {
                     validPlay = true;
                 } else {
@@ -231,17 +231,17 @@ public class Game {
 
     private boolean isValidFormatPlay(String play) {
         boolean isValidFormatPlay = false;
+        Pattern positions = Pattern.compile("A1|A2|A3|A4|B1|B2|B3|B4|C1|C2|C3|C4|D1|D2|D3|D4|");
         String[] playParams = play.split(" ");
         String action = playParams[0];
         String firstPosition = playParams[1];
 
-        Pattern positions = Pattern.compile("A1|A2|A3|A4|B1|B2|B3|B4|C1|C2|C3|C4|D1|D2|D3|D4");
-
         try {
-            if (action.equalsIgnoreCase("I")) {
+            if (action.equals("I")) {
                 isValidFormatPlay = positions.matcher(firstPosition).matches();
-            } else if (action.equalsIgnoreCase("M")) {
+            } else if (action.equals("M")) {
                 String secondPosition = playParams[2];
+
                 isValidFormatPlay = positions.matcher(firstPosition).matches() && positions.matcher(secondPosition).matches();
             }
         } catch (Exception e) {
