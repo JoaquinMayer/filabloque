@@ -43,6 +43,18 @@ public class Main {
         this.exit = exit;
     }
 
+    public void startSystem() {
+        System.out.println("Bienvenido a Fila y Bloque");
+        System.out.println("__________________________");
+        System.out.println();
+
+        while (!this.isExit()) {
+            this.menu();
+        }
+
+        this.exit();
+    }
+
     private void showPlayers(int order, Player filterPlayer) {
 
         int i = 1;
@@ -89,22 +101,10 @@ public class Main {
         return true;
     }
 
-    public void startSystem() {
-        System.out.println("Bienvenido a Fila y Bloque");
-        System.out.println("__________________________");
-        System.out.println();
-
-        while (!this.isExit()) {
-            this.menu();
-        }
-
-        this.exit();
-    }
-
     private void menu() {
         Scanner scan = new Scanner(System.in);
         int option = 0;
-        
+
         while (option == 0) {
             System.out.println();
             System.out.println("#############################");
