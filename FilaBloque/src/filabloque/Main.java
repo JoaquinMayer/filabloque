@@ -100,7 +100,7 @@ public class Main {
         while (!this.isExit()) {
             this.menu();
         }
-        
+
         this.exit();
     }
 
@@ -216,6 +216,7 @@ public class Main {
                     }
                 } catch (Exception ex) {
                     System.out.println("Por favor ingrese una opcion valida.");
+                    scan.next();
                     player = 0;
                 }
             }
