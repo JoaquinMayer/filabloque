@@ -97,8 +97,8 @@ public class Game {
     }
 
     public void startGame() {
-        
-        this.playSound();
+        this.playSound("./src/sounds/crowdclaps.wav"); // TODO: borrar antes de hacer la entrega
+
         System.out.println("Juego iniciado");
         System.out.println("__________________________");
         System.out.println();
@@ -366,6 +366,10 @@ public class Game {
             gameFinished = false;
         }
 
+        if (gameFinished) {
+            this.playSound("./src/sounds/crowdclaps.wav");
+        }
+
         return gameFinished;
     }
 
@@ -410,9 +414,9 @@ public class Game {
 
     }
 
-    public void playSound() {
+    public void playSound(String path) {
         try {
-            File file = new File("./src/sounds/crowdclaps.wav");
+            File file = new File(path);
             AudioInputStream stream;
             AudioFormat format;
             DataLine.Info info;
@@ -425,7 +429,7 @@ public class Game {
             clip.open(stream);
             clip.start();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("No se pudo reproducir el sonido correctamente");
         }
     }
 }
