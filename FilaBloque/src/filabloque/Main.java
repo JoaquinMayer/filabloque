@@ -46,7 +46,6 @@ public class Main {
     public void startSystem() {
         System.out.println("Bienvenido a Fila y Bloque");
         System.out.println("__________________________");
-        System.out.println();
 
         while (!this.isExit()) {
             this.menu();
@@ -56,7 +55,9 @@ public class Main {
     }
 
     private void showPlayers(int order, Player filterPlayer) {
-
+        System.out.println("");
+        System.out.println("Jugadores");
+        System.out.println("__________________________");
         int i = 1;
 
         if (order == 1) {
@@ -78,6 +79,8 @@ public class Main {
             }
 
         }
+
+        System.out.println("__________________________");
 
     }
 
@@ -107,15 +110,15 @@ public class Main {
 
         while (option == 0) {
             System.out.println();
-            System.out.println("#############################");
-            System.out.println("#   Menu                    #");
-            System.out.println("# _________________________ #");
-            System.out.println("# 1. Crear nuevo jugador    #");
-            System.out.println("# 2. Nuevo juego            #");
-            System.out.println("# 3. Mostrar el ranking     #");
-            System.out.println("# 4. Salir                  #");
-            System.out.println("# _________________________ #");
-            System.out.println("#############################");
+            System.out.println("╔═══════════════════════════╗");
+            System.out.println("║   Menu                    ║");
+            System.out.println("║ _________________________ ║");
+            System.out.println("║ 1. Crear nuevo jugador    ║");
+            System.out.println("║ 2. Nuevo juego            ║");
+            System.out.println("║ 3. Mostrar el ranking     ║");
+            System.out.println("║ 4. Salir                  ║");
+            System.out.println("║ _________________________ ║");
+            System.out.println("╚═══════════════════════════╝");
 
             try {
                 System.out.println();
@@ -191,8 +194,13 @@ public class Main {
 
             Player newPlayer = new Player(userName, userAlias, userAge);
             this.addPlayer(newPlayer);
+            System.out.println();
+            System.out.println("__________________________");
+            System.out.println();
             System.out.println("El usuario " + newPlayer.getName() + " se ha creado correctamente.");
             System.out.println();
+            System.out.println("__________________________");
+
         } catch (Exception ex) {
             System.out.println("Algun campo no es valido." + ex); // TODO: Eliminar el + ex
         }

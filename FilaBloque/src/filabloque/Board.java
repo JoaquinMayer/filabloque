@@ -107,12 +107,14 @@ public class Board {
     public void showBoard() {
         String[] letters = {"A", "B", "C", "D"};
 
+        System.out.println();
         // default board size
         if (this.getDesignBoard() == 1) {
             this.showSmallBoard(letters);
         } else {
             this.showBigBoard(letters);
         }
+        System.out.println();
     }
 
     private void showSmallBoard(String[] letters) {
