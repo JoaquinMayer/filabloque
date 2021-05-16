@@ -109,14 +109,17 @@ public class Main {
         int option = 0;
 
         while (option == 0) {
-            System.out.println("Menu");
-            System.out.println("__________________________");
-            System.out.println("1. Crear nuevo jugador");
-            System.out.println("2. Nuevo juego");
-            System.out.println("3. Mostrar el ranking");
-            System.out.println("4. Salir");
-            System.out.println("__________________________");
-
+            System.out.println();
+            System.out.println("#############################");
+            System.out.println("#   Menu                    #");
+            System.out.println("# _________________________ #");
+            System.out.println("# 1. Crear nuevo jugador    #");
+            System.out.println("# 2. Nuevo juego            #");
+            System.out.println("# 3. Mostrar el ranking     #");
+            System.out.println("# 4. Salir                  #");
+            System.out.println("# _________________________ #");
+            System.out.println("#############################");
+            
             try {
                 System.out.println();
                 System.out.print("Ingrese una opcion: ");
