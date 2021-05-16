@@ -20,7 +20,7 @@ public class Game {
     private int playerTurn;
     private boolean[][] completedDesigns;
     private boolean finishedGame;
-
+    private boolean exitGame = false;
     private String ANSI_RESET = "\u001B[0m";
     private String ANSI_RED = "\u001B[31m";
     private String ANSI_BLUE = "\u001B[34m";
@@ -82,6 +82,14 @@ public class Game {
         this.finishedGame = finishedGame;
     }
 
+    public boolean isExitGame() {
+        return exitGame;
+    }
+
+    public void setExitGame(boolean exitGame) {
+        this.exitGame = exitGame;
+    }
+
     public void startGame() {
         System.out.println("Juego iniciado");
         System.out.println("__________________________");
@@ -93,9 +101,11 @@ public class Game {
 
             this.board.showBoard();
 
-            while (!this.isFinishedGame()) {
+            while (!this.isFinishedGame() && !this.isExitGame()) {
                 this.playTurn();
-                this.checkTurn();
+                if (!this.isExitGame()) {
+                    this.checkTurn();
+                }
             }
         }
 
@@ -169,7 +179,7 @@ public class Game {
         if (sizeOption == 3) {
             configuration[0] = 3;
         }
-        
+
         return configuration;
     }
 
@@ -186,25 +196,36 @@ public class Game {
 
         System.out.println();
 
-        for (int i = 1; i <= 2; i++) {
+        for (int i = 1; i <= 2 && !this.isExitGame(); i++) {
             boolean madeMove = false;
-            while (!madeMove) {
+            while (!madeMove && !this.isExitGame()) {
                 String play = this.readPlay(i);
-                madeMove = board.makeMove(play, i, this.getPlayerTurn());
 
-                if (!madeMove) {
-                    System.out.println("Jugada invalida, por favor ingrese una jugada valida.");
+                if (!play.equalsIgnoreCase("X")) {
+                    madeMove = board.makeMove(play, i, this.getPlayerTurn());
+
+                    if (!madeMove) {
+                        System.out.println("Jugada invalida, por favor ingrese una jugada valida.");
+                    }
+                } else {
+                    this.checkExitGame();
                 }
             }
 
-            this.board.showBoard();
+            if (!this.isExitGame()) {
+                this.board.showBoard();
+            }
+
         }
 
-        if (this.playerTurn == 1) {
-            this.setPlayerTurn(2);
-        } else {
-            this.setPlayerTurn(1);
+        if (!this.isExitGame()) {
+            if (this.playerTurn == 1) {
+                this.setPlayerTurn(2);
+            } else {
+                this.setPlayerTurn(1);
+            }
         }
+
     }
 
     public String readPlay(int turn) {
@@ -212,16 +233,19 @@ public class Game {
         boolean validPlay = false;
         String play = "";
 
-        while (!validPlay) {
+        while (!validPlay && !play.equalsIgnoreCase("X")) {
             try {
                 System.out.print("Ingrese la siguiente jugada (turno " + turn + "): ");
                 play = scan.nextLine();
 
-                if (this.isValidFormatPlay(play)) {
-                    validPlay = true;
-                } else {
-                    System.out.println("Por favor ingrese una jugada valida.");
+                if (!play.equalsIgnoreCase("X")) {
+                    if (this.isValidFormatPlay(play)) {
+                        validPlay = true;
+                    } else {
+                        System.out.println("Por favor ingrese una jugada valida.");
+                    }
                 }
+
             } catch (Exception ex) {
                 System.out.println("Por favor ingrese una jugada valida.");
             }
@@ -335,5 +359,46 @@ public class Game {
         }
 
         return gameFinished;
+    }
+
+    private void checkExitGame() {
+        Scanner scan = new Scanner(System.in);
+        int option = 0;
+
+        while (option == 0) {
+            System.out.println("¿Esta seguro que quiere salir y perder el juego?");
+            System.out.println("__________________________");
+            System.out.println("1. SI");
+            System.out.println("2. NO");
+            System.out.println("__________________________");
+            System.out.println();
+
+            try {
+                System.out.print("Ingrese una opcion: ");
+                option = scan.nextInt();
+                scan.nextLine();
+
+                if (option < 0 && option > 2) {
+                    System.out.print("Ingrese una opcion valida");
+                    option = 0;
+                }
+            } catch (Exception e) {
+                System.out.println("Por favor ingrese una opcion valida");
+                option = 0;
+                scan.nextLine();
+            }
+
+        }
+
+        if (option == 1) {
+            this.setExitGame(true);
+            if (this.playerTurn == 1) {
+                this.getPlayer2().setGamesWon(this.getPlayer2().getGamesWon() + 1);
+            } else {
+                this.getPlayer1().setGamesWon(this.getPlayer1().getGamesWon() + 1);
+            }
+            this.setFinishedGame(true);
+        }
+
     }
 }
