@@ -20,11 +20,11 @@ public class Board {
     private int config;
 //    private String referencesPieces[] = {"", "Frente Rojo", "Dorso Rojo", "Frente Azul", "Dorso Azul"};
 
-    private String ANSI_RESET = "\u001B[0m";
-    private String ANSI_RED = "\u001B[31m";
-    private String ANSI_BLUE = "\u001B[34m";
+    private final String ANSI_RESET = "\u001B[0m";
+    private final String ANSI_RED = "\u001B[31m";
+    private final String ANSI_BLUE = "\u001B[34m";
 
-    public Board(int designBoard, int config) {
+    public Board(int config, int designBoard) {
         this.designBoard = designBoard;
         this.config = config;
         this.buildBoard();
