@@ -86,19 +86,19 @@ public class Main {
     }
 
     private boolean isValidAlias(String alias) {
-        if (alias == null) {
-            return false;
-        }
+        boolean isValid = true;
 
-        if (!(this.players == null)) {
+        if (!(this.players == null) && alias != null) {
             for (Player player : this.players) {
                 if (player.getAlias().equals(alias)) {
-                    return false;
+                    isValid = false;
                 }
             }
+        } else {
+            isValid = false;
         }
 
-        return true;
+        return isValid;
     }
 
     private void menu() {

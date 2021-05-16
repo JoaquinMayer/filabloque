@@ -126,20 +126,11 @@ public class Board {
                 System.out.print("|");
 
                 switch (this.board[i][j]) {
-                    case 1:
-                        System.out.print(RED_COLOR + "F" + RESET_COLOR);
-                        break;
-                    case 2:
-                        System.out.print(RED_COLOR + "D" + RESET_COLOR);
-                        break;
-                    case 3:
-                        System.out.print(BLUE_COLOR + "F" + RESET_COLOR);
-                        break;
-                    case 4:
-                        System.out.print(BLUE_COLOR + "D" + RESET_COLOR);
-                        break;
-                    default:
-                        System.out.print(" ");
+                    case 1 -> System.out.print(RED_COLOR + "F" + RESET_COLOR);
+                    case 2 -> System.out.print(RED_COLOR + "D" + RESET_COLOR);
+                    case 3 -> System.out.print(BLUE_COLOR + "F" + RESET_COLOR);
+                    case 4 -> System.out.print(BLUE_COLOR + "D" + RESET_COLOR);
+                    default -> System.out.print(" ");
                 }
             }
 
@@ -248,7 +239,7 @@ public class Board {
     }
 
     public Boolean makeMove(String play, int turn, int player) {
-        Boolean isValid = false;
+        boolean isValid;
         String action = play.split(" ")[0];
 
         if (action.equals("M")) {
@@ -292,19 +283,20 @@ public class Board {
     }
 
     private boolean movement(int rowFrom, int columnFrom, int rowTo, int columnTo) {
+        boolean isValid = true;
         try {
             int tmp = this.getBoard()[rowFrom][columnFrom];
             this.setBoardPosition(rowFrom, columnFrom, this.getBoard()[rowTo][columnTo]);
             this.setBoardPosition(rowTo, columnTo, tmp);
         } catch (Exception e) {
-            return false;
+            isValid = false;
         }
 
-        return true;
+        return isValid;
     }
 
     private boolean invertPiece(String play, int turn, int player) {
-        Boolean isValid = false;
+        boolean isValid = false;
         String invert = play.split(" ")[1];
         String letter = invert.split("")[0];
         int row = positionLetter(letter);
