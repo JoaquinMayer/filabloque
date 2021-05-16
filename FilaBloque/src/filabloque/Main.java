@@ -49,6 +49,7 @@ public class Main {
     }
 
     private void showPlayers(int order, Player filterPlayer) {
+
         int i = 1;
 
         if (order == 1) {
@@ -70,6 +71,7 @@ public class Main {
             }
 
         }
+
     }
 
     private void addPlayer(Player player) {
@@ -100,7 +102,7 @@ public class Main {
         while (!this.isExit()) {
             this.menu();
         }
-        
+
         this.exit();
     }
 
@@ -109,13 +111,16 @@ public class Main {
         int option = 0;
 
         while (option == 0) {
-            System.out.println("Menu");
-            System.out.println("__________________________");
-            System.out.println("1. Crear nuevo jugador");
-            System.out.println("2. Nuevo juego");
-            System.out.println("3. Mostrar el ranking");
-            System.out.println("4. Salir");
-            System.out.println("__________________________");
+            System.out.println();
+            System.out.println("#############################");
+            System.out.println("#   Menu                    #");
+            System.out.println("# _________________________ #");
+            System.out.println("# 1. Crear nuevo jugador    #");
+            System.out.println("# 2. Nuevo juego            #");
+            System.out.println("# 3. Mostrar el ranking     #");
+            System.out.println("# 4. Salir                  #");
+            System.out.println("# _________________________ #");
+            System.out.println("#############################");
 
             try {
                 System.out.println();
@@ -188,75 +193,88 @@ public class Main {
         System.out.println("Nuevo juego");
         System.out.println("__________________________");
 
-        for (int i = 1; i <= 2; i++) {
-            int player = 0;
-            while (player == 0) {
-                if (players.size() > 0) {
-                    this.showPlayers(2, players.get(0));
-                } else {
-                    this.showPlayers(2, null);
-                }
+        if (this.players.size() > 1) {
+            for (int i = 1; i <= 2; i++) {
+                int player = 0;
+                while (player == 0) {
+                    if (players.size() > 0) {
+                        this.showPlayers(2, players.get(0));
+                    } else {
+                        this.showPlayers(2, null);
+                    }
 
-                try {
-                    System.out.println();
-                    System.out.print("Seleccione el jugador " + i + ": ");
-                    player = scan.nextInt();
-                    System.out.println();
+                    try {
+                        System.out.println();
+                        System.out.print("Seleccione el jugador " + i + ": ");
+                        player = scan.nextInt();
+                        System.out.println();
 
-                    if (player > 0 && !(player - 1 > this.players.size())) {
-                        if (players.size() > 0 && players.get(0).equals(this.players.get(player - 1))) {
+                        if (player > 0 && !(player - 1 > this.players.size())) {
+                            if (players.size() > 0 && players.get(0).equals(this.players.get(player - 1))) {
+                                System.out.println("Por favor ingrese una opcion valida.");
+                                player = 0;
+                            } else {
+                                players.add(this.players.get(player - 1));
+                            }
+                        } else {
                             System.out.println("Por favor ingrese una opcion valida.");
                             player = 0;
-                        } else {
-                            players.add(this.players.get(player - 1));
                         }
-                    } else {
+                    } catch (Exception ex) {
                         System.out.println("Por favor ingrese una opcion valida.");
+                        scan.next();
                         player = 0;
                     }
-                } catch (Exception ex) {
-                    System.out.println("Por favor ingrese una opcion valida.");
-                    player = 0;
                 }
             }
+
+            Game game = new Game(players.get(0), players.get(1));
+            game.startGame();
+        } else {
+            System.out.println();
+            System.out.println("No hay suficientes jugadores");
         }
 
-        Game game = new Game(players.get(0), players.get(1));
-        game.startGame();
+        System.out.println("__________________________");
+
     }
 
     private void showRanking() {
-        Scanner scan = new Scanner(System.in);
-        int option = 0;
+        if (this.players.size() > 0) {
+            Scanner scan = new Scanner(System.in);
+            int option = 0;
 
-        while (option == 0) {
-            System.out.println("Seleccione el orden del ranking");
-            System.out.println("__________________________");
-            System.out.println("1. Juegos Ganados");
-            System.out.println("2. Alfabeticamente");
-            System.out.println("3. Salir");
-            System.out.println("__________________________");
-            System.out.println();
+            while (option == 0) {
+                System.out.println("Seleccione el orden del ranking");
+                System.out.println("__________________________");
+                System.out.println("1. Juegos Ganados");
+                System.out.println("2. Alfabeticamente");
+                System.out.println("3. Salir");
+                System.out.println("__________________________");
+                System.out.println();
 
-            try {
-                System.out.print("Ingrese una opcion: ");
-                option = scan.nextInt();
-                scan.nextLine();
+                try {
+                    System.out.print("Ingrese una opcion: ");
+                    option = scan.nextInt();
+                    scan.nextLine();
 
-                if (option < 0 && option > 3) {
-                    System.out.print("Ingrese una opcion valida");
+                    if (option < 0 && option > 3) {
+                        System.out.print("Ingrese una opcion valida");
+                        option = 0;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Por favor ingrese una opcion valida");
                     option = 0;
+                    scan.nextLine();
                 }
-            } catch (Exception e) {
-                System.out.println("Por favor ingrese una opcion valida");
-                option = 0;
-                scan.nextLine();
+
             }
 
-        }
-
-        if (option != 3) {
-            this.showPlayers(option, null);
+            if (option != 3) {
+                this.showPlayers(option, null);
+            }
+        } else {
+            System.out.println("Aun no hay jugadores");
         }
 
     }
