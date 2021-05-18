@@ -14,9 +14,9 @@ public class Board {
     private int designBoard;
     private int config;
 
-    private final String ANSI_RESET = "\u001B[0m";
-    private final String ANSI_RED = "\u001B[31m";
-    private final String ANSI_BLUE = "\u001B[34m";
+    private final String RESET_COLOR = "\u001B[0m";
+    private final String RED_COLOR = "\u001B[31m";
+    private final String BLUE_COLOR = "\u001B[34m";
 
     public Board(int config, int designBoard) {
         this.designBoard = designBoard;
@@ -58,7 +58,7 @@ public class Board {
                 && (rowTo == rowFrom || rowTo == rowFrom - 1 || rowTo == rowFrom + 1) && (columnTo == columnFrom || columnTo == columnFrom - 1 || columnTo == columnFrom + 1);
     }
 
-    public boolean isPlayerPiece(int x, int y, int player) {
+    private boolean isPlayerPiece(int x, int y, int player) {
         if (player == 1) {
             return this.getBoard()[x][y] == 1 || this.getBoard()[x][y] == 2;
         } else {
@@ -107,12 +107,14 @@ public class Board {
     public void showBoard() {
         String[] letters = {"A", "B", "C", "D"};
 
+        System.out.println();
         // default board size
         if (this.getDesignBoard() == 1) {
             this.showSmallBoard(letters);
         } else {
             this.showBigBoard(letters);
         }
+        System.out.println();
     }
 
     private void showSmallBoard(String[] letters) {
@@ -126,20 +128,11 @@ public class Board {
                 System.out.print("|");
 
                 switch (this.board[i][j]) {
-                    case 1:
-                        System.out.print(ANSI_RED + "F" + ANSI_RESET);
-                        break;
-                    case 2:
-                        System.out.print(ANSI_RED + "D" + ANSI_RESET);
-                        break;
-                    case 3:
-                        System.out.print(ANSI_BLUE + "F" + ANSI_RESET);
-                        break;
-                    case 4:
-                        System.out.print(ANSI_BLUE + "D" + ANSI_RESET);
-                        break;
-                    default:
-                        System.out.print(" ");
+                    case 1 -> System.out.print(RED_COLOR + "F" + RESET_COLOR);
+                    case 2 -> System.out.print(RED_COLOR + "D" + RESET_COLOR);
+                    case 3 -> System.out.print(BLUE_COLOR + "F" + RESET_COLOR);
+                    case 4 -> System.out.print(BLUE_COLOR + "D" + RESET_COLOR);
+                    default -> System.out.print(" ");
                 }
             }
 
@@ -167,75 +160,75 @@ public class Board {
                         case 1 -> {
                             switch (k) {
                                 case 0 ->
-                                    System.out.print(ANSI_RED + "FFFFF" + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "FFFFF" + RESET_COLOR);
                                 case 1 ->
-                                    System.out.print(ANSI_RED + "F    " + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "F    " + RESET_COLOR);
                                 case 2 ->
-                                    System.out.print(ANSI_RED + "FFF  " + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "FFF  " + RESET_COLOR);
                                 case 3 ->
-                                    System.out.print(ANSI_RED + "F    " + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "F    " + RESET_COLOR);
                                 case 4 ->
-                                    System.out.print(ANSI_RED + "F    " + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "F    " + RESET_COLOR);
                             }
                         }
 
                         case 2 -> {
                             switch (k) {
                                 case 0 ->
-                                    System.out.print(ANSI_RED + "DDDD " + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "DDDD " + RESET_COLOR);
                                 case 1 ->
-                                    System.out.print(ANSI_RED + "D   D" + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "D   D" + RESET_COLOR);
                                 case 2 ->
-                                    System.out.print(ANSI_RED + "D   D" + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "D   D" + RESET_COLOR);
                                 case 3 ->
-                                    System.out.print(ANSI_RED + "D   D" + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "D   D" + RESET_COLOR);
                                 case 4 ->
-                                    System.out.print(ANSI_RED + "DDDD " + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "DDDD " + RESET_COLOR);
                             }
                         }
 
                         case 3 -> {
                             switch (k) {
                                 case 0 ->
-                                    System.out.print(ANSI_BLUE + "FFFFF" + ANSI_RESET);
+                                    System.out.print(BLUE_COLOR + "FFFFF" + RESET_COLOR);
                                 case 1 ->
-                                    System.out.print(ANSI_BLUE + "F    " + ANSI_RESET);
+                                    System.out.print(BLUE_COLOR + "F    " + RESET_COLOR);
                                 case 2 ->
-                                    System.out.print(ANSI_BLUE + "FFF  " + ANSI_RESET);
+                                    System.out.print(BLUE_COLOR + "FFF  " + RESET_COLOR);
                                 case 3 ->
-                                    System.out.print(ANSI_BLUE + "F    " + ANSI_RESET);
+                                    System.out.print(BLUE_COLOR + "F    " + RESET_COLOR);
                                 case 4 ->
-                                    System.out.print(ANSI_BLUE + "F    " + ANSI_RESET);
+                                    System.out.print(BLUE_COLOR + "F    " + RESET_COLOR);
                             }
                         }
 
                         case 4 -> {
                             switch (k) {
                                 case 0 ->
-                                    System.out.print(ANSI_BLUE + "DDDD " + ANSI_RESET);
+                                    System.out.print(BLUE_COLOR + "DDDD " + RESET_COLOR);
                                 case 1 ->
-                                    System.out.print(ANSI_BLUE + "D   D" + ANSI_RESET);
+                                    System.out.print(BLUE_COLOR + "D   D" + RESET_COLOR);
                                 case 2 ->
-                                    System.out.print(ANSI_BLUE + "D   D" + ANSI_RESET);
+                                    System.out.print(BLUE_COLOR + "D   D" + RESET_COLOR);
                                 case 3 ->
-                                    System.out.print(ANSI_BLUE + "D   D" + ANSI_RESET);
+                                    System.out.print(BLUE_COLOR + "D   D" + RESET_COLOR);
                                 case 4 ->
-                                    System.out.print(ANSI_BLUE + "DDDD " + ANSI_RESET);
+                                    System.out.print(BLUE_COLOR + "DDDD " + RESET_COLOR);
                             }
                         }
 
                         default -> {
                             switch (k) {
                                 case 0 ->
-                                    System.out.print(ANSI_RED + "     " + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "     " + RESET_COLOR);
                                 case 1 ->
-                                    System.out.print(ANSI_RED + "     " + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "     " + RESET_COLOR);
                                 case 2 ->
-                                    System.out.print(ANSI_RED + "     " + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "     " + RESET_COLOR);
                                 case 3 ->
-                                    System.out.print(ANSI_RED + "     " + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "     " + RESET_COLOR);
                                 case 4 ->
-                                    System.out.print(ANSI_RED + "     " + ANSI_RESET);
+                                    System.out.print(RED_COLOR + "     " + RESET_COLOR);
                             }
                         }
 
@@ -248,7 +241,7 @@ public class Board {
     }
 
     public Boolean makeMove(String play, int turn, int player) {
-        Boolean isValid = false;
+        boolean isValid;
         String action = play.split(" ")[0];
 
         if (action.equals("M")) {
@@ -292,19 +285,20 @@ public class Board {
     }
 
     private boolean movement(int rowFrom, int columnFrom, int rowTo, int columnTo) {
+        boolean isValid = true;
         try {
             int tmp = this.getBoard()[rowFrom][columnFrom];
             this.setBoardPosition(rowFrom, columnFrom, this.getBoard()[rowTo][columnTo]);
             this.setBoardPosition(rowTo, columnTo, tmp);
         } catch (Exception e) {
-            return false;
+            isValid = false;
         }
 
-        return true;
+        return isValid;
     }
 
     private boolean invertPiece(String play, int turn, int player) {
-        Boolean isValid = false;
+        boolean isValid = false;
         String invert = play.split(" ")[1];
         String letter = invert.split("")[0];
         int row = positionLetter(letter);

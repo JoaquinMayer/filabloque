@@ -122,7 +122,7 @@ public class Game {
 
         while (boardConfigOption == 0) {
             try {
-                System.out.println("Configuracion del tablero");
+                System.out.println("Configuración del tablero");
                 System.out.println("__________________________");
                 System.out.println("(Elija el modo en que desea configurar el tablero)");
                 System.out.println();
@@ -131,17 +131,17 @@ public class Game {
                 System.out.println("3. Salir");
                 System.out.println("__________________________");
                 System.out.println();
-                System.out.print("Ingrese una opcion: ");
+                System.out.print("Ingrese una opción: ");
                 boardConfigOption = scan.nextInt();
 
                 if (boardConfigOption > 0 && boardConfigOption <= 3) {
                     configuration[0] = boardConfigOption;
                 } else {
-                    System.out.println("Por favor ingrese una opcion valida.");
+                    System.out.println("Por favor ingrese una opción válida.");
                     boardConfigOption = 0;
                 }
             } catch (Exception ex) {
-                System.out.println("Por favor ingrese una opcion valida.");
+                System.out.println("Por favor ingrese una opción válida.");
                 boardConfigOption = 0;
                 scan.nextLine();
             }
@@ -163,17 +163,17 @@ public class Game {
                 System.out.println("3. Salir");
                 System.out.println("__________________________");
                 System.out.println();
-                System.out.print("Ingrese una opcion: ");
+                System.out.print("Ingrese una opción: ");
                 sizeOption = scan.nextInt();
 
                 if (sizeOption > 0 && sizeOption <= 3) {
                     configuration[1] = sizeOption;
                 } else {
-                    System.out.println("Por favor ingrese una opcion valida.");
+                    System.out.println("Por favor ingrese una opción válida.");
                     sizeOption = 0;
                 }
             } catch (Exception ex) {
-                System.out.println("Por favor ingrese una opcion valida.");
+                System.out.println("Por favor ingrese una opción válida.");
                 sizeOption = 0;
                 scan.nextLine();
             }
@@ -186,7 +186,7 @@ public class Game {
         return configuration;
     }
 
-    public void playTurn() {
+    private void playTurn() {
         String actualPlayerName;
 
         if (this.playerTurn == 1) {
@@ -208,7 +208,7 @@ public class Game {
                     madeMove = board.makeMove(play, i, this.getPlayerTurn());
 
                     if (!madeMove) {
-                        System.out.println("Jugada invalida, por favor ingrese una jugada valida.");
+                        System.out.println("Jugada inválida, por favor ingrese una jugada válida.");
                     }
                 } else {
                     this.checkExitGame();
@@ -231,7 +231,7 @@ public class Game {
 
     }
 
-    public String readPlay(int turn) {
+    private String readPlay(int turn) {
         Scanner scan = new Scanner(System.in);
         boolean validPlay = false;
         String play = "";
@@ -245,12 +245,12 @@ public class Game {
                     if (this.isValidFormatPlay(play)) {
                         validPlay = true;
                     } else {
-                        System.out.println("Por favor ingrese una jugada valida.");
+                        System.out.println("Por favor ingrese una jugada válida.");
                     }
                 }
 
             } catch (Exception ex) {
-                System.out.println("Por favor ingrese una jugada valida.");
+                System.out.println("Por favor ingrese una jugada válida.");
             }
         }
         return play;
@@ -279,7 +279,7 @@ public class Game {
         return isValidFormatPlay;
     }
 
-    public void checkTurn() {
+    private void checkTurn() {
         this.checkCompletedDesigns();
         this.setFinishedGame(this.checkWinner());
     }
@@ -337,17 +337,17 @@ public class Game {
             }
 
             if (updatedCompletedDesigns[0] && !this.getCompletedDesigns()[0]) {
-                System.out.println("El jugador " + this.getPlayer1().getName() + " completo el diseño de fila");
-            } else if (updatedCompletedDesigns[1] && !this.getCompletedDesigns()[1]) {
-                System.out.println("El jugador " + this.getPlayer1().getName() + " completo el diseño de bloque");
-            } else if (updatedCompletedDesigns[2] && !this.getCompletedDesigns()[2]) {
-                System.out.println("El jugador " + this.getPlayer2().getName() + " completo el diseño de bloque");
-            } else if (updatedCompletedDesigns[3] && !this.getCompletedDesigns()[3]) {
-                System.out.println("El jugador " + this.getPlayer2().getName() + " completo el diseño de bloque");
-            } else {
-                System.out.println("No se realizaron diseños");
+                System.out.println("El jugador " + RED_COLOR + this.getPlayer1().getAlias() + RESET_COLOR + " completó el diseño de fila");
             }
-            System.out.println();
+            if (updatedCompletedDesigns[1] && !this.getCompletedDesigns()[1]) {
+                System.out.println("El jugador " + RED_COLOR + this.getPlayer1().getAlias() + RESET_COLOR + " completó el diseño de bloque");
+            }
+            if (updatedCompletedDesigns[2] && !this.getCompletedDesigns()[2]) {
+                System.out.println("El jugador " + BLUE_COLOR + this.getPlayer2().getAlias() + RESET_COLOR + " completó el diseño de fila");
+            }
+            if (updatedCompletedDesigns[3] && !this.getCompletedDesigns()[3]) {
+                System.out.println("El jugador " + BLUE_COLOR + this.getPlayer2().getAlias() + RESET_COLOR + " completó el diseño de bloque");
+            }
 
             this.setCompletedDesigns(updatedCompletedDesigns);
 
@@ -366,10 +366,10 @@ public class Game {
             System.out.println("Es un empate");
         } else if (this.getCompletedDesigns()[0] && this.getCompletedDesigns()[1]) {
             this.player1.setGamesWon(this.getPlayer1().getGamesWon() + 1);
-            System.out.println("Ha ganado el jugador " + this.getPlayer1().getName());
+            System.out.println("Ha ganado el jugador " + RED_COLOR + this.getPlayer1().getAlias() + RESET_COLOR);
         } else if (this.getCompletedDesigns()[2] && this.getCompletedDesigns()[3]) {
             this.player2.setGamesWon(this.getPlayer2().getGamesWon() + 1);
-            System.out.println("Ha ganado el jugador " + this.getPlayer2().getName());
+            System.out.println("Ha ganado el jugador " + BLUE_COLOR + this.getPlayer2().getAlias() + RESET_COLOR);
         } else {
             gameFinished = false;
         }
@@ -403,7 +403,7 @@ public class Game {
         int option = 0;
 
         while (option == 0) {
-            System.out.println("¿Esta seguro que quiere salir y perder el juego?");
+            System.out.println("¿Está seguro que quiere salir y perder el juego?");
             System.out.println("__________________________");
             System.out.println("1. SI");
             System.out.println("2. NO");
@@ -411,16 +411,16 @@ public class Game {
             System.out.println();
 
             try {
-                System.out.print("Ingrese una opcion: ");
+                System.out.print("Ingrese una opción: ");
                 option = scan.nextInt();
                 scan.nextLine();
 
                 if (option < 0 && option > 2) {
-                    System.out.print("Ingrese una opcion valida");
+                    System.out.print("Ingrese una opción válida");
                     option = 0;
                 }
             } catch (Exception e) {
-                System.out.println("Por favor ingrese una opcion valida");
+                System.out.println("Por favor ingrese una opción válida");
                 option = 0;
                 scan.nextLine();
             }

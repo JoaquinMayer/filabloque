@@ -43,8 +43,21 @@ public class Main {
         this.exit = exit;
     }
 
-    private void showPlayers(int order, Player filterPlayer) {
+    public void startSystem() {
+        System.out.println("Bienvenido a Fila y Bloque");
+        System.out.println("__________________________");
 
+        while (!this.isExit()) {
+            this.menu();
+        }
+
+        this.exit();
+    }
+
+    private void showPlayers(int order, Player filterPlayer) {
+        System.out.println("");
+        System.out.println("Jugadores");
+        System.out.println("__________________________");
         int i = 1;
 
         if (order == 1) {
@@ -67,6 +80,8 @@ public class Main {
 
         }
 
+        System.out.println("__________________________");
+
     }
 
     private void addPlayer(Player player) {
@@ -74,56 +89,44 @@ public class Main {
     }
 
     private boolean isValidAlias(String alias) {
-        if (alias == null) {
-            return false;
-        }
+        boolean isValid = true;
 
-        if (!(this.players == null)) {
+        if (!(this.players == null) && alias != null) {
             for (Player player : this.players) {
                 if (player.getAlias().equals(alias)) {
-                    return false;
+                    isValid = false;
                 }
             }
+        } else {
+            isValid = false;
         }
 
-        return true;
-    }
-
-    public void startSystem() {
-        System.out.println("Bienvenido a Fila y Bloque");
-        System.out.println("__________________________");
-        System.out.println();
-
-        while (!this.isExit()) {
-            this.menu();
-        }
-
-        this.exit();
+        return isValid;
     }
 
     private void menu() {
         Scanner scan = new Scanner(System.in);
         int option = 0;
-        
+
         while (option == 0) {
             System.out.println();
-            System.out.println("#############################");
-            System.out.println("#   Menu                    #");
-            System.out.println("# _________________________ #");
-            System.out.println("# 1. Crear nuevo jugador    #");
-            System.out.println("# 2. Nuevo juego            #");
-            System.out.println("# 3. Mostrar el ranking     #");
-            System.out.println("# 4. Salir                  #");
-            System.out.println("# _________________________ #");
-            System.out.println("#############################");
+            System.out.println("╔═══════════════════════════╗");
+            System.out.println("║   Menu                    ║");
+            System.out.println("║ _________________________ ║");
+            System.out.println("║ 1. Crear nuevo jugador    ║");
+            System.out.println("║ 2. Nuevo juego            ║");
+            System.out.println("║ 3. Mostrar el ranking     ║");
+            System.out.println("║ 4. Salir                  ║");
+            System.out.println("║ _________________________ ║");
+            System.out.println("╚═══════════════════════════╝");
 
             try {
                 System.out.println();
-                System.out.print("Ingrese una opcion: ");
+                System.out.print("Ingrese una opción: ");
                 option = scan.nextInt();
                 scan.nextLine();
             } catch (Exception ex) {
-                System.out.println("Por favor ingrese una opcion valida");
+                System.out.println("Por favor ingrese una opción válida:");
                 option = 0;
                 scan.nextLine();
             }
@@ -141,7 +144,7 @@ public class Main {
             case 4 ->
                 this.setExit(true);
             default ->
-                System.out.println("Opcion no valida!");
+                System.out.println("Opción inválida!");
         }
 
     }
@@ -158,26 +161,48 @@ public class Main {
             System.out.print("Ingrese el nombre del jugador: ");
             String userName = scan.nextLine();
 
+            while (userName.equals("")) {
+                System.out.print("El nombre no puede estar vacío, por favor ingrese un nombre valido: ");
+                userName = scan.nextLine();
+            }
+
             System.out.print("Ingrese un alias: ");
-            while (userAlias == null) {
+            while (userAlias == null || userAlias.equals("")) {
                 userAlias = scan.nextLine();
                 userAlias = this.isValidAlias(userAlias) ? userAlias : null;
 
                 if (userAlias == null) {
                     System.out.println();
                     System.out.print("El alias ya existe, por favor ingrese otro alias:");
+                } else if (userAlias.equals("")) {
+                    System.out.print("El alias no puede estar vacío, por favor ingrese un alias valido: ");
                 }
             }
 
             System.out.print("Ingrese la edad: ");
-            int userAge = scan.nextInt();
+            int userAge = 0;
+            while (userAge == 0) {
+                try {
+                    userAge = scan.nextInt();
+                } catch (Exception e) {
+                    System.out.println("Edad no válida. Por favor, ingrese una edad válida");
+                    userAge = 0;
+                    scan.nextLine();
+                }
+
+            }
 
             Player newPlayer = new Player(userName, userAlias, userAge);
             this.addPlayer(newPlayer);
+            System.out.println();
+            System.out.println("__________________________");
+            System.out.println();
             System.out.println("El usuario " + newPlayer.getName() + " se ha creado correctamente.");
             System.out.println();
+            System.out.println("__________________________");
+
         } catch (Exception ex) {
-            System.out.println("Algun campo no es valido." + ex);
+            System.out.println("Algun campo no es valido." + ex); // TODO: Eliminar el + ex
         }
     }
 
@@ -206,17 +231,17 @@ public class Main {
 
                         if (player > 0 && !(player - 1 > this.players.size())) {
                             if (players.size() > 0 && players.get(0).equals(this.players.get(player - 1))) {
-                                System.out.println("Por favor ingrese una opcion valida.");
+                                System.out.println("Por favor ingrese una opción válida.");
                                 player = 0;
                             } else {
                                 players.add(this.players.get(player - 1));
                             }
                         } else {
-                            System.out.println("Por favor ingrese una opcion valida.");
+                            System.out.println("Por favor ingrese una opción válida.");
                             player = 0;
                         }
                     } catch (Exception ex) {
-                        System.out.println("Por favor ingrese una opcion valida.");
+                        System.out.println("Por favor ingrese una opción válida.");
                         scan.next();
                         player = 0;
                     }
@@ -243,22 +268,22 @@ public class Main {
                 System.out.println("Seleccione el orden del ranking");
                 System.out.println("__________________________");
                 System.out.println("1. Juegos Ganados");
-                System.out.println("2. Alfabeticamente");
+                System.out.println("2. Alfabéticamente");
                 System.out.println("3. Salir");
                 System.out.println("__________________________");
                 System.out.println();
 
                 try {
-                    System.out.print("Ingrese una opcion: ");
+                    System.out.print("Ingrese una opción: ");
                     option = scan.nextInt();
                     scan.nextLine();
 
                     if (option < 0 && option > 3) {
-                        System.out.print("Ingrese una opcion valida");
+                        System.out.print("Ingrese una opción válida");
                         option = 0;
                     }
                 } catch (Exception e) {
-                    System.out.println("Por favor ingrese una opcion valida");
+                    System.out.println("Por favor ingrese una opción válida");
                     option = 0;
                     scan.nextLine();
                 }
