@@ -185,7 +185,7 @@ public class Game {
         return configuration;
     }
 
-    public void playTurn() {
+    private void playTurn() {
         String actualPlayerName;
 
         if (this.playerTurn == 1) {
@@ -230,7 +230,7 @@ public class Game {
 
     }
 
-    public String readPlay(int turn) {
+    private String readPlay(int turn) {
         Scanner scan = new Scanner(System.in);
         boolean validPlay = false;
         String play = "";
@@ -278,7 +278,7 @@ public class Game {
         return isValidFormatPlay;
     }
 
-    public void checkTurn() {
+    private void checkTurn() {
         this.checkCompletedDesigns();
         this.setFinishedGame(this.checkWinner());
     }
@@ -422,7 +422,7 @@ public class Game {
 
     }
 
-    public void playSound(String path) {
+    private void playSound(String path) {
         try {
             File file = new File(path);
             AudioInputStream stream;
