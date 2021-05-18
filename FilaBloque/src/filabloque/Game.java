@@ -3,7 +3,6 @@ package filabloque;
 import java.io.File;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -23,6 +22,7 @@ public class Game {
     private boolean[] completedDesigns;
     private boolean finishedGame;
     private boolean exitGame = false;
+
     private String RESET_COLOR = "\u001B[0m";
     private String RED_COLOR = "\u001B[31m";
     private String BLUE_COLOR = "\u001B[34m";
@@ -32,7 +32,7 @@ public class Game {
         this.player2 = player2;
         this.board = null;
         this.playerTurn = 1;
-        this.completedDesigns = new boolean[] { false, false, false, false };
+        this.completedDesigns = new boolean[]{false, false, false, false};
         this.finishedGame = false;
     }
 
@@ -93,8 +93,6 @@ public class Game {
     }
 
     public void startGame() {
-        this.playSound("./src/sounds/crowdclaps.wav"); // TODO: borrar antes de hacer la entrega
-
         System.out.println("Juego iniciado");
         System.out.println("__________________________");
         System.out.println();
@@ -108,6 +106,7 @@ public class Game {
             while (!this.isFinishedGame() && !this.isExitGame()) {
                 this.playTurn();
                 if (!this.isExitGame()) {
+                    System.out.println();
                     this.checkTurn();
                 }
             }
@@ -117,7 +116,7 @@ public class Game {
 
     private int[] gameConfiguration() {
         Scanner scan = new Scanner(System.in);
-        int configuration[] = new int[] { 1, 1 };
+        int configuration[] = new int[]{1, 1};
         int boardConfigOption = 0;
         int sizeOption = 0;
 
@@ -128,7 +127,7 @@ public class Game {
                 System.out.println("(Elija el modo en que desea configurar el tablero)");
                 System.out.println();
                 System.out.println("1. Aleatorio");
-                System.out.println("2. Preconfigurado");
+                System.out.println("2. Precargado");
                 System.out.println("3. Salir");
                 System.out.println("__________________________");
                 System.out.println();
@@ -159,7 +158,7 @@ public class Game {
                 System.out.println("__________________________");
                 System.out.println("(Elija el tamaño en que desea ver el tablero)");
                 System.out.println();
-                System.out.println("1. Normal");
+                System.out.println("1. Pequeño");
                 System.out.println("2. Grande");
                 System.out.println("3. Salir");
                 System.out.println("__________________________");
@@ -286,7 +285,6 @@ public class Game {
     }
 
     private void checkCompletedDesigns() {
-        System.out.println();
         try {
             boolean[] updatedCompletedDesigns = this.getCompletedDesigns().clone();
 
@@ -315,7 +313,6 @@ public class Game {
                                 updatedCompletedDesigns[2] = true;
                             }
                         }
-
                     } else if (this.board.getBoard()[i][j] == 2 || this.board.getBoard()[i][j] == 4) {
                         int pieceToCheck = this.board.getBoard()[i][j];
                         boolean blockDesign = false;
@@ -362,9 +359,10 @@ public class Game {
 
     private boolean checkWinner() {
         boolean gameFinished = true;
+        boolean draw = this.getCompletedDesigns()[0] && this.getCompletedDesigns()[1] && this.getCompletedDesigns()[2] && this.getCompletedDesigns()[3];
         System.out.println();
-        if (this.getCompletedDesigns()[0] && this.getCompletedDesigns()[1] && this.getCompletedDesigns()[2]
-                && this.getCompletedDesigns()[3]) {
+
+        if (draw) {
             System.out.println("Es un empate");
         } else if (this.getCompletedDesigns()[0] && this.getCompletedDesigns()[1]) {
             this.player1.setGamesWon(this.getPlayer1().getGamesWon() + 1);
@@ -381,6 +379,23 @@ public class Game {
         }
 
         return gameFinished;
+    }
+
+    private void playSound(String path) {
+        try {
+            File file = new File(path);
+            AudioInputStream stream;
+            DataLine.Info info;
+            Clip clip;
+
+            stream = AudioSystem.getAudioInputStream(file);
+            info = new DataLine.Info(Clip.class, stream.getFormat());
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(stream);
+            clip.start();
+        } catch (Exception e) {
+            System.out.println("No se pudo reproducir el sonido correctamente");
+        }
     }
 
     private void checkExitGame() {
@@ -422,24 +437,5 @@ public class Game {
             this.setFinishedGame(true);
         }
 
-    }
-
-    public void playSound(String path) {
-        try {
-            File file = new File(path);
-            AudioInputStream stream;
-            AudioFormat format;
-            DataLine.Info info;
-            Clip clip;
-
-            stream = AudioSystem.getAudioInputStream(file);
-            format = stream.getFormat();
-            info = new DataLine.Info(Clip.class, format);
-            clip = (Clip) AudioSystem.getLine(info);
-            clip.open(stream);
-            clip.start();
-        } catch (Exception e) {
-            System.out.println("No se pudo reproducir el sonido correctamente");
-        }
     }
 }
