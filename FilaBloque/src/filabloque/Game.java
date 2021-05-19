@@ -187,13 +187,13 @@ public class Game {
     }
 
     private void playTurn() {
-        String actualPlayerName;
+        Player actualPlayerName;
 
         if (this.playerTurn == 1) {
-            actualPlayerName = this.player1;
+            actualPlayerName = this.getPlayer1();
             System.out.print("Es el turno de " + RED_COLOR + actualPlayerName + RESET_COLOR);
         } else {
-            actualPlayerName = this.player2;
+            actualPlayerName = this.getPlayer2();
             System.out.print("Es el turno de " + BLUE_COLOR + actualPlayerName + RESET_COLOR);
         }
 
