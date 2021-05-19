@@ -202,7 +202,7 @@ public class Main {
             System.out.println("__________________________");
 
         } catch (Exception ex) {
-            System.out.println("Algun campo no es valido." + ex); // TODO: Eliminar el + ex
+            System.out.println("Algun campo no es valido.");
         }
     }
 
