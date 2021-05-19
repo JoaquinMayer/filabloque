@@ -51,7 +51,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return alias;
+        return this.getAlias();
     }
     
 }
