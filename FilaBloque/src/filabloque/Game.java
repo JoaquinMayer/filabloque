@@ -190,10 +190,10 @@ public class Game {
         String actualPlayerName;
 
         if (this.playerTurn == 1) {
-            actualPlayerName = this.player1.getAlias();
+            actualPlayerName = this.player1;
             System.out.print("Es el turno de " + RED_COLOR + actualPlayerName + RESET_COLOR);
         } else {
-            actualPlayerName = this.player2.getAlias();
+            actualPlayerName = this.player2;
             System.out.print("Es el turno de " + BLUE_COLOR + actualPlayerName + RESET_COLOR);
         }
 
@@ -337,16 +337,16 @@ public class Game {
             }
 
             if (updatedCompletedDesigns[0] && !this.getCompletedDesigns()[0]) {
-                System.out.println(RED_COLOR + this.getPlayer1().getAlias() + RESET_COLOR + " completó el diseño de fila");
+                System.out.println("El jugador " + RED_COLOR + this.getPlayer1() + RESET_COLOR + " completó el diseño de fila");
             }
             if (updatedCompletedDesigns[1] && !this.getCompletedDesigns()[1]) {
-                System.out.println(RED_COLOR + this.getPlayer1().getAlias() + RESET_COLOR + " completó el diseño de bloque");
+                System.out.println("El jugador " + RED_COLOR + this.getPlayer1() + RESET_COLOR + " completó el diseño de bloque");
             }
             if (updatedCompletedDesigns[2] && !this.getCompletedDesigns()[2]) {
-                System.out.println(BLUE_COLOR + this.getPlayer2().getAlias() + RESET_COLOR + " completó el diseño de fila");
+                System.out.println("El jugador " + BLUE_COLOR + this.getPlayer2() + RESET_COLOR + " completó el diseño de fila");
             }
             if (updatedCompletedDesigns[3] && !this.getCompletedDesigns()[3]) {
-                System.out.println(BLUE_COLOR + this.getPlayer2().getAlias() + RESET_COLOR + " completó el diseño de bloque");
+                System.out.println("El jugador " + BLUE_COLOR + this.getPlayer2() + RESET_COLOR + " completó el diseño de bloque");
             }
 
             this.setCompletedDesigns(updatedCompletedDesigns);
@@ -365,10 +365,10 @@ public class Game {
             System.out.println("Es un empate");
         } else if (this.getCompletedDesigns()[0] && this.getCompletedDesigns()[1]) {
             this.player1.setGamesWon(this.getPlayer1().getGamesWon() + 1);
-            System.out.println("Ha ganado el jugador " + RED_COLOR + this.getPlayer1().getAlias() + RESET_COLOR);
+            System.out.println("Ha ganado el jugador " + RED_COLOR + this.getPlayer1() + RESET_COLOR);
         } else if (this.getCompletedDesigns()[2] && this.getCompletedDesigns()[3]) {
             this.player2.setGamesWon(this.getPlayer2().getGamesWon() + 1);
-            System.out.println("Ha ganado " + BLUE_COLOR + this.getPlayer2().getAlias() + RESET_COLOR);
+            System.out.println("Ha ganado el jugador " + BLUE_COLOR + this.getPlayer2() + RESET_COLOR);
         } else {
             gameFinished = false;
         }

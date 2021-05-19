@@ -48,4 +48,10 @@ public class Player {
     public void setGamesWon(int gamesWon) {
         this.gamesWon = gamesWon;
     }
+
+    @Override
+    public String toString() {
+        return alias;
+    }
+    
 }
